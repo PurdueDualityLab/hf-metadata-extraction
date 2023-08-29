@@ -1,1 +1,0 @@
-This model for Twitter Sentiment Analysis based on Twitter Pilkada DKI 2017 

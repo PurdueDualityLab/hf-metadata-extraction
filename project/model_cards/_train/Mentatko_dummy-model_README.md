@@ -1,1 +1,0 @@
-Model based on camembert-base, fine tuned on glue, mrpc. Created for test purposed for hf course for training interaction with git.

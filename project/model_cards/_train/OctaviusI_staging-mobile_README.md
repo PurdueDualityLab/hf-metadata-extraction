@@ -1,3 +1,0 @@
----
-license: creativeml-openrail-m
----

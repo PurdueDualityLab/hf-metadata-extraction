@@ -1,6 +1,0 @@
----
-tags:
-- conversational
----
-
-# Bateman ChatBot

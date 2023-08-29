@@ -1,1 +1,0 @@
-PyTorch trained model on GAD dataset for relation classification, using BioBert weights.

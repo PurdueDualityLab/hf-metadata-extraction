@@ -1,6 +1,0 @@
----
-license: mit
-language:
-- si
----
-This is SinBERT-small model. SinBERT models are pretrained on a large Sinhala monolingual corpus (sin-cc-15M) using RoBERTa. If you use this model, please cite *BERTifying Sinhala - A Comprehensive Analysis of Pre-trained Language Models for Sinhala Text Classification, LREC 2022*

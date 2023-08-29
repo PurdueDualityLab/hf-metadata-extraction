@@ -1,3 +1,0 @@
----
-license: bigscience-openrail-m
----

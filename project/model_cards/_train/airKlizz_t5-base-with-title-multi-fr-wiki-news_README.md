@@ -1,5 +1,0 @@
----
-language: fr
-license: mit
----
-

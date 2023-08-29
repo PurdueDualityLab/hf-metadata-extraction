@@ -1,1 +1,0 @@
-Please visit the repo for training details. https://github.com/AADeLucia/gpt2-narrative-decoding

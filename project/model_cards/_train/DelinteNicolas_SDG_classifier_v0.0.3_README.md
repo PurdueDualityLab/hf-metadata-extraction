@@ -1,1 +1,0 @@
-Fined-tuned BERT trained on 6500 images with warmup, increased epoch and decreased learning rate

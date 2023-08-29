@@ -1,8 +1,0 @@
----
-
-tags:
-- image-classification
-- pytorch
-
----
-

@@ -1,6 +1,0 @@
----
-datasets:
-- xtreme
-language:
-- ar
----

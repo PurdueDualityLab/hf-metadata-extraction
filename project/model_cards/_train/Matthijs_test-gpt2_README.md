@@ -1,1 +1,0 @@
-This is an empty model card!

@@ -1,5 +1,0 @@
----
-tags:
-- conversational
----
-# RinTohsaka bot

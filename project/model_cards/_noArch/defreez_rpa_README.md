@@ -1,6 +1,0 @@
----
-tags:
-- object-detection
-- vision
-
----

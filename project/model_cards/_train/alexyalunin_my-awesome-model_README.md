@@ -1,3 +1,0 @@
-# RuBio
-
-for paper: dsdfsfsdf

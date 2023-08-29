@@ -1,6 +1,0 @@
----
-tags:
-- conversational
----
-
-# Yasuo Model

@@ -1,1 +1,0 @@
-first test model om Huggingface HUB

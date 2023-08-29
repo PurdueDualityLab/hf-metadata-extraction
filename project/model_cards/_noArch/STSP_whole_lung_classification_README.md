@@ -1,5 +1,0 @@
----
-tags:
-- keras
-- image-classification
----

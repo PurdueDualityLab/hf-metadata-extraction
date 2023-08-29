@@ -1,1 +1,0 @@
-English to Luganda text translation

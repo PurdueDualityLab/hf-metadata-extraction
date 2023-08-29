@@ -1,1 +1,0 @@
-The ELECTRA-large model, fine-tuned on the CoLA subset of the GLUE benchmark.

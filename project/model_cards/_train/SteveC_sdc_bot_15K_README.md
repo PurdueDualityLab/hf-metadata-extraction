@@ -1,1 +1,0 @@
-It's just a dialog bot trained on my Tweets. Unfortunately as tweets aren\'t very conversational it comes off pretty random.

@@ -1,1 +1,0 @@
-Trained on recent news and lots of political vocabulary.

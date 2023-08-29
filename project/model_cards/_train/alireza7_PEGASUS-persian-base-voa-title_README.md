@@ -1,1 +1,0 @@
-More information about models is available [here](https://github.com/alirezasalemi7/ARMAN).

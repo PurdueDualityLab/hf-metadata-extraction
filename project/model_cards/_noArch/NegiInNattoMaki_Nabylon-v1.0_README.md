@@ -1,1 +1,0 @@
-New version is available at: https://huggingface.co/NegiInNattoMaki/Nabylon

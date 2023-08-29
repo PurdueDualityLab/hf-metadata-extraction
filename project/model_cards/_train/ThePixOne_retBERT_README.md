@@ -1,1 +1,0 @@
-BERT finetuned on wallstreetbets subreddit
