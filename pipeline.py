@@ -1,12 +1,13 @@
 from huggingface_hub import HfApi, list_models, ModelCard
 import constant
+import keys
 import openai
 import data_cleansing
 
 
 hf_api = HfApi(
     endpoint="https://huggingface.co", # Can be a Private Hub endpoint.
-    token= constant.HUGGINGFACE_API_KEY, # Token is not persisted on the machine.
+    token= keys.HUGGINGFACE_API_KEY, # Token is not persisted on the machine.
 )
 
 # card = ModelCard.load('bert-base-uncased')
@@ -21,7 +22,7 @@ content = data_cleansing.remove_url(card.content)
 subsections = data_cleansing.split_to_subsections(content)
 
 
-openai.api_key = constant.OPENAI_API_KEY
+openai.api_key = keys.OPENAI_API_KEY
 
 chatlog = []
 chatlog.append({"role" : "system", "content" : constant.BACKGROUND})
