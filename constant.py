@@ -1,10 +1,5 @@
-OPENAI_API_KEY = "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"
-HUGGINGFACE_API_KEY = "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"
 BACKGROUND = "extract metadata from given AI model, the output should only be one or two words, if information not present return null \n"
 
-#QUESTION_MODEL_ID = "what is the model id, if information not present reply null"
-QUESTION_MODEL_ID = "what is the name of this model, if information not present reply null"
-#sometimes gets it wrong
 QUESTION_TAGS = "what are the tags of this model, if information not present reply null"
 QUESTION_DATASETS = "what are the datasets used in this model, if information not present reply null"
 QUESTION_LANGUAGE = "what is the language of the model, if information not present reply null"
