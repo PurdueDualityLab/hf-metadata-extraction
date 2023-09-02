@@ -27,17 +27,20 @@
           "type": "string",
           "format": "URL"
         },
-        "paper": {
-          "type": "string",
-          "format": "URL"
+        "papers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "URL"
+          }
         },
-        "pipeline_tag": {
+        "framework": {
           "type": "array",
           "items": {
             "type": "string"
           }
         },
-        "parameters": {
+        "parameter_count": {
           "type": "string"
         },
         "hyper_parameters": {
