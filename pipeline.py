@@ -2,7 +2,7 @@ from huggingface_hub import HfApi, list_models, ModelCard
 import constant
 import keys
 import openai
-import data_cleansing
+import dataCleansing
 
 
 hf_api = HfApi(
@@ -18,9 +18,24 @@ card = ModelCard.load('gpt2')
 #card.content = card.data + card.text
 print(card.content + "\n\n") 
 
-content = data_cleansing.remove_url(card.content) 
-subsections = data_cleansing.split_to_subsections(content)
+content = dataCleansing.remove_url(card.content) 
+subsections = dataCleansing.split_to_subsections(content)
 
+def grab_text(keyword):
+    content = card.content.lower()
+
+    texts = []
+    start = content.find("dataset")
+    end = start + len("dataset")
+
+    while (start != -1):
+        texts.append(content[start - 150:end+150])
+        
+        content = content.split("dataset", 1)[1]
+        start = content.find("dataset")
+        end = start + len("dataset")
+        
+    return texts
 
 openai.api_key = keys.OPENAI_API_KEY
 
@@ -49,9 +64,9 @@ def chat(chatlog):
     print("\n" + chatlog[-1]["content"] + "\n")
     return chatlog
 
-def find_model_id(chatlog):
-    chatlog.append({"role" : "user", "content" : constant.QUESTION_MODEL_ID})
-    return chat(chatlog)
+# def find_model_id(chatlog):
+#     chatlog.append({"role" : "user", "content" : constant.QUESTION_MODEL_ID})
+#     return chat(chatlog)
 
 def find_tags(chatlog):
     chatlog.append({"role" : "user", "content" : constant.QUESTION_TAGS})
@@ -81,7 +96,7 @@ def find_eval(chatlog):
     chatlog.append({"role" : "user", "content" : constant.QUESTION_EVALUATION})
     return chat(chatlog)
 
-chatlog = find_model_id(chatlog)
+# chatlog = find_model_id(chatlog)
 chatlog = find_tags(chatlog)
 chatlog = find_datasets(chatlog)
 chatlog = find_language(chatlog)
