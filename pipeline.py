@@ -25,15 +25,15 @@ def grab_text(keyword):
     content = card.content.lower()
 
     texts = []
-    start = content.find("dataset")
-    end = start + len("dataset")
+    start = content.find(keyword)
+    end = start + len(keyword)
 
     while (start != -1):
         texts.append(content[start - 150:end+150])
         
-        content = content.split("dataset", 1)[1]
-        start = content.find("dataset")
-        end = start + len("dataset")
+        content = content.split(keyword, 1)[1]
+        start = content.find(keyword)
+        end = start + len(keyword)
         
     return texts
 
