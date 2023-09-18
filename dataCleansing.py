@@ -1,13 +1,8 @@
-import re
-
-def remove_url(text):
-    text = re.sub(r'\S*https\S*', '', text)
-    return text
-
-def split_to_subsections(text):
+def split_by_subsections(card):
+    
     sections = {}
-    #fix top parts
-    subsection_content = text.split("## ")
+    #fix top parts, subsections vs subsubsections
+    subsection_content = card.split("## ")
 
     for section in subsection_content:
         sections[section.split("\n")[0]] = section

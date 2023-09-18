@@ -1,0 +1,77 @@
+Shen:
+
+
+
+evaluation: try to manually chekc 10 - 20 of outputs
+make sure to document on what I did:
+    howo did I select samlpe for manual chekc
+    did I apply random sampling etc
+
+llama is open source rather than product of openai (gpt turbo 3.5)
+we should have pipelines for both gpt and llama to compare results
+
+maybe split workload to
+
+- gpt pipelines
+- llama pipelines
+- assistance for both pipelines when needed
+
+openai apy organization setting
+
+errors:
+
+test cases:
+    success:
+        SauravMaheshkar/clr-finetuned-albert-large 
+        Medivvv/distilbert-imdb 
+        zanelim/singbert-lite-sg 
+        albert-xlarge-v2 
+        Ramos-Ramos/vicreg-resnet-50 
+        HUPD/hupd-distilroberta-base 
+        Intel/distilbert-base-uncased-distilled-squad-int8-static
+        google/mobilenet_v1_1.0_224
+        sr5434/gptQuotes
+    fails:
+        hf-internal-testing/tiny-random-DistilBertForQuestionAnswering (no model card)
+        lmqg/mt5-small-jaquad-qg-ae (exceeded token length)
+        mrm8488/mobilebert-uncased-finetuned-squadv1 (wrong prediction)
+    idk:
+        sentence-transformers/multi-qa-mpnet-base-dot-v1 (model predicted: "mpnet-base")
+        facebook/mask2former-swin-base-IN21k-cityscapes-semantic (model predicted: "null")
+
+
+architecture:
+    AlbertForMaskedLM:
+        SauravMaheshkar/clr-finetuned-albert-large
+        albert-xlarge-v2
+    AlbertForPreTraining:    
+        zanelim/singbert-lite-sg
+    DistilBertForSequenceClassification:
+        Medivvv/distilbert-imdb
+    DistilBertForQuestionAnswering:
+        Intel/distilbert-base-uncased-distilled-squad-int8-static
+    Resnet:
+        Ramos-Ramos/vicreg-resnet-50
+    RobertaForMaskedLM:
+        HUPD/hupd-distilroberta-base
+    MT5ForConditionalGeneration: 
+        lmqg/mt5-small-jaquad-qg-ae
+    MPNetForMaskedLM:
+        sentence-transformers/multi-qa-mpnet-base-dot-v1
+    MobileBertForQuestionAnswering:
+        mrm8488/mobilebert-uncased-finetuned-squadv1
+    MobileNetV1ForImageClassification:
+        google/mobilenet_v1_1.0_224
+    Mask2FormerForUniversalSegmentation:
+        facebook/mask2former-swin-base-IN21k-cityscapes-semantic
+    OPTForCausalLM:
+        sr5434/gptQuotes
+
+
+
+
+interesting observations:
+    when running code 5 times for consistency check, appending to chatlog with consecutive assistance responses, yields funky result 
+
+token limit is 4096, so we cut the model card at 3950 allowing 146 tokens for last prompt and response
+rate limit of openai api is reached at around 20 models. Made it so every 15 models, program sleeps for 10s to avoid rate limit error
