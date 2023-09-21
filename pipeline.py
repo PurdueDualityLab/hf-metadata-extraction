@@ -21,21 +21,39 @@ print(card.content + "\n\n")
 content = dataCleansing.remove_url(card.content) 
 subsections = dataCleansing.split_to_subsections(content)
 
-def grab_text(keyword):
+def grab_text(keywords: list, size: int) -> dict:
     content = card.content.lower()
+    char_size = len(card.content)
 
-    texts = []
-    start = content.find(keyword)
-    end = start + len(keyword)
-
-    while (start != -1):
-        texts.append(content[start - 150:end+150])
+    texts = {}
+    
+    for keyword in keywords:
+        print("----", keyword, "----")
         
-        content = content.split(keyword, 1)[1]
+        temp = content
+        
         start = content.find(keyword)
         end = start + len(keyword)
-        
+
+        while (start != -1):
+            if keyword in texts:
+                print("found: " + temp[max(0, start - size) : min(end + size, char_size - 1)])
+                texts[keyword] += temp[max(0, start - size) : min(end + size, char_size - 1)]
+            else:
+                print("first find: " + temp[max(0, start - size) : min(end + size, char_size - 1)])
+                texts[keyword] = temp[max(0, start - size) : min(end + size, char_size - 1)]
+            
+            temp = temp.split(keyword, 1)[1]
+            start = temp.find(keyword)
+            end = start + len(keyword)
+
+    print(texts)
     return texts
+
+result = grab_text(("languages", "language", "gpt-2"), 20)
+print("---- RESULTS ----")
+for item in result.items():
+    print(item)
 
 openai.api_key = keys.OPENAI_API_KEY
 
@@ -104,6 +122,3 @@ chatlog = find_license(chatlog)
 chatlog = find_model_task(chatlog)
 chatlog = find_param(chatlog)
 chatlog = find_eval(chatlog)
-
-
-
