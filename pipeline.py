@@ -26,17 +26,20 @@ hf_api = HfApi(
 )
 openai.api_key = keys.OPENAI_API_KEY
 
-def load_card(model_name):
+def load_card(model_name: str):
     card = ModelCard.load(model_name)
     return card.content
  
 
-def contextualDataFeeding(model_name):
+def contextualDataFeeding(model_name: str) -> list:
     chatlog = []
     token_count = 0
     card = load_card(model_name)
     subsections = dataCleansing.split_by_subsections(card)
-    chatlog.append({"role" : "system", "content" : "extract metadata from given AI model, the output should only be one or two words, if information not present return null \n"})
+    if args.mode != "name_only":
+        chatlog.append({"role" : "system", "content" : "extract fine-tuned model from given AI model, the output should only be one or two words, if information not present return null \n"})
+    else:
+        chatlog.append({"role" : "system", "content" : "extract fine-tuned model from given AI model, the output should only be one or two words, if information not present return null. example: given Intel/albert-base-v2-sst2-int8-dynamic, return albert-base-v2 \n"})
     # token count = 58
     token_count += 58
     if args.mode == "name_only" or args.mode == "both":
@@ -59,7 +62,7 @@ def contextualDataFeeding(model_name):
             #print(subsections[section_headers])
     return chatlog
 
-async def async_chat(chatlog):
+async def async_chat(chatlog: list):
     chat = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages = chatlog
@@ -67,7 +70,8 @@ async def async_chat(chatlog):
     return chat
 
 async def metadataExtraction(chatlog):
-    chatlog.append({"role": "user", "content" : "What model is this model fine tuned on, if not fine tuned on any other model return null. Answer concisely with only the name of the model"})
+
+    chatlog.append({"role": "user", "content" : "What model is this model fine tuned on. Do not return the dataset it was fine-tuned on. If not fine tuned on any other model return null Answer concisely with only the name of the model"})
 
     output = []
     for i in range(5):
@@ -84,7 +88,7 @@ async def metadataExtraction(chatlog):
             except openai.error.RateLimitError:
                 time.sleep(10)
         output.append(chat['choices'][0]['message']['content'])
-        print(f"resoponse{i}: {chat['choices'][0]['message']['content']}")
+        print(f"resoponse{i+1}: {chat['choices'][0]['message']['content']}")
 
     string_count = Counter(output)
     most_common = string_count.most_common(1)
@@ -95,77 +99,80 @@ async def metadataExtraction(chatlog):
 with open("filtered_models.json", 'r') as json_file:
     data = json.load(json_file)
 
-results = {architecture: {} for architecture in list(data.keys())}
+results = {}
+#results = {architecture: {} for architecture in list(data.keys())}
 
-retry_count = 0
-for architecture in list(data.keys()):
-    for model in data[architecture]:
-        while retry_count < MAX_RETRIES:
-            try:
-                chatlog = contextualDataFeeding(model)
-                print("context done")
-                data_extracted = asyncio.run(metadataExtraction(chatlog))
-                print("extract done\n")
-                results[architecture][model]=data_extracted
-                print(f"{model} : {data_extracted}\n")
-                break
-            except openai.error.Timeout:
-                retry_count += 1
-                print(f"retry count from timeout: {retry_count}\n")
-            except openai.error.ServiceUnavailableError:
-                retry_count += 1
-                print(f"retry count from service unavilable: {retry_count}\n")
-            except ValueError:
-                results[architecture][model] = "Invalid 'model_index' in" + str(model) + ", model card could not be parsed"
-                print(f"Invalid 'model_index' in {model}, model card could not be parsed\n")
-                break
-            except huggingface_hub.utils._errors.RepositoryNotFoundError:
-                results[architecture][model] = str(model) + "repo not found"
-                print(f"{model} repo not found\n")
-                break
-            except Exception as e:
-                results[architecture][model] = "An exception of type" + type(e).__name__ + "occurred"
-                print(f"An exception of type {type(e).__name__} occurred while parsing {model}\n")
-                break
+# retry_count = 0
+# for architecture in list(data.keys()):
+#     results[architecture] = {}
+#     for model in data[architecture]:
+#         while retry_count < MAX_RETRIES:
+#             try:
+#                 chatlog = contextualDataFeeding(model)
+#                 print("context done")
+#                 data_extracted = asyncio.run(metadataExtraction(chatlog))
+#                 print("extract done\n")
+#                 results[architecture][model]=data_extracted
+#                 print(f"{model} : {data_extracted}\n")
+#                 break
+#             except openai.error.Timeout:
+#                 retry_count += 1
+#                 print(f"retry count from timeout: {retry_count}\n")
+#             except openai.error.ServiceUnavailableError:
+#                 retry_count += 1
+#                 print(f"retry count from service unavilable: {retry_count}\n")
+#             except ValueError:
+#                 results[architecture][model] = "Invalid 'model_index' in" + str(model) + ", model card could not be parsed"
+#                 print(f"Invalid 'model_index' in {model}, model card could not be parsed\n")
+#                 break
+#             except huggingface_hub.utils._errors.RepositoryNotFoundError:
+#                 results[architecture][model] = str(model) + "repo not found"
+#                 print(f"{model} repo not found\n")
+#                 break
+#             except Exception as e:
+#                 results[architecture][model] = "An exception of type" + type(e).__name__ + "occurred"
+#                 print(f"An exception of type {type(e).__name__} occurred while parsing {model}\n")
+#                 break
 
 
-# tests for single model case
+#tests for single model case
 
-# model= "lIlBrother/ko-barTNumText"
+# model= "morenolq/bart-it"
 # chatlog = contextualDataFeeding(model)
-# data_extracted = metadataExtraction(chatlog)
+# data_extracted = asyncio.run(metadataExtraction(chatlog))
 # print(f"{model} : {data_extracted}")
 
 # tests for single architecture model cases
 
-# retry_count = 0
-# architecture = "AlbertForPreTraining"
-# for model in data[architecture]:
-#     while retry_count < MAX_RETRIES:
-#         try:
-#             chatlog = contextualDataFeeding(model)
-#             print("context done")
-#             data_extracted = asyncio.run(metadataExtraction(chatlog))
-#             print("extract done\n")
-#             results[architecture][model]=data_extracted
-#             print(f"{model} : {data_extracted}\n")
-#             break
-#         except openai.error.Timeout:
-#             retry_count += 1
-#             print(f"retry count from timeout: {retry_count}\n")
-#         except openai.error.ServiceUnavailableError:
-#             retry_count += 1
-#             print(f"retry count from service unavilable: {retry_count}\n")
-#         except ValueError:
-#             results[architecture][model] = "Invalid 'model_index' in" + str(model) + ", model card could not be parsed"
-#             print(f"Invalid 'model_index' in {model}, model card could not be parsed\n")
-#             break
-#         except huggingface_hub.utils._errors.RepositoryNotFoundError:
-#             results[architecture][model] = str(model) + "repo not found"
-#             print(f"{model} repo not found\n")
-#             break
+retry_count = 0
+architecture = "MBartForConditionalGeneration"
+results[architecture] = {}
+for model in data[architecture]:
+    while retry_count < MAX_RETRIES:
+        try:
+            chatlog = contextualDataFeeding(model)
+            print("context done")
+            data_extracted = asyncio.run(metadataExtraction(chatlog))
+            print("extract done\n")
+            results[architecture][model]=data_extracted
+            print(f"{model} : {data_extracted}\n")
+            break
+        except openai.error.Timeout:
+            retry_count += 1
+            print(f"retry count from timeout: {retry_count}\n")
+        except openai.error.ServiceUnavailableError:
+            retry_count += 1
+            print(f"retry count from service unavilable: {retry_count}\n")
+        except ValueError:
+            results[architecture][model] = "Invalid 'model_index' in" + str(model) + ", model card could not be parsed"
+            print(f"Invalid 'model_index' in {model}, model card could not be parsed\n")
+            break
+        except huggingface_hub.utils._errors.RepositoryNotFoundError:
+            results[architecture][model] = str(model) + "repo not found"
+            print(f"{model} repo not found\n")
+            break
 
-file_path = "result.json"
+file_path = "name_only.json"
 with open(file_path, "w") as json_file:
     json.dump(results, json_file, indent = 4)
 
