@@ -1,0 +1,35 @@
+[
+    {
+        "datasets": [
+            "bookcorpus",
+            "wikipedia"
+        ],
+        "language": "en",
+        "license": "apache-2.0",
+        "model_tasks": [
+            "sequence classification",
+            "token classification",
+            "question answering"
+        ],
+        "github": "https://github.com/google-research/bert",
+        "paper": "https://arxiv.org/abs/1810.04805",
+        "frameworks": [
+            "transformers"
+        ],
+        "parameter_count": "110M",
+        "patch_size": null,
+        "steps": 1000000,
+        "epochs": null,
+        "batchsize": 256,
+        "dropout_prob": null,
+        "learning_rate": 0.0001,
+        "evaluation": null,
+        "hardware": "4 cloud TPUs in Pod configuration (16 TPU chips total)",
+        "limitation_and_bias": null,
+        "how_to_use": null,
+        "input_format": null,
+        "output_format": null,
+        "tokenLimit": null,
+        "vocabulary_size": 30000
+    }
+]

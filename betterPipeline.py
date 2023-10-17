@@ -20,7 +20,6 @@ import sys
 import os
 
 import keys
-import tokenizer
 import dataPreProcessing 
 import prompt
 
