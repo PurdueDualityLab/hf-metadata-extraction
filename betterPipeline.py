@@ -101,18 +101,21 @@ md_header_splits = markdown_splitter.split_text(card)
 #print(md_header_splits)
 
 vector_store = FAISS.from_documents(md_header_splits, OpenAIEmbeddings())
-retriever = vector_store.as_retriever(search_kwargs = {"k": 10})
-retriever_prompt = "What are the datasets, language, license, github, papers (arxiv), frameworks, parameter count (params), hyper parameters, evaluation results, input and output format of this model?"
-docs = retriever.get_relevant_documents(retriever_prompt)
-print(f"retriever prompt: {retriever_prompt}\n\n")
-#print(pretty_print_docs(docs))
-
 llm = OpenAI(temperature = 0)
-compressor = LLMChainExtractor.from_llm(llm)
-compression_retriever = ContextualCompressionRetriever(base_compressor = compressor, base_retriever = retriever)
-compressed_docs = compression_retriever.get_relevant_documents(retriever_prompt)
-#print(f"\ncompressed retriever prompt: {retriever_prompt}")
-#print(pretty_print_docs(compressed_docs))
+compressed_docs = []
+for metadata in data_schema["properties"]:
+    retriever = vector_store.as_retriever(search_kwargs = {"k": 2})
+    retriever_prompt = prompt.METADATA_PROMPT[metadata]
+    print(f"\nprompt: {retriever_prompt}")    
+    # docs = list of doc objects
+    docs = retriever.get_relevant_documents(retriever_prompt)
+    #print(pretty_print_docs(docs))
+    compressor = LLMChainExtractor.from_llm(llm)
+    compression_retriever = ContextualCompressionRetriever(base_compressor = compressor, base_retriever = retriever)
+    compressed_docs.extend(compression_retriever.get_relevant_documents(retriever_prompt))
+    print(pretty_print_docs(compression_retriever.get_relevant_documents(retriever_prompt)))
+
+
 
 extraction_prompt = """
     Given relevant documents on huggingface {model_type} model {model}, extract the properties of one single entity mentioned in the 'information_extraction' function.

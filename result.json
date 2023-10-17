@@ -1,12 +1,14 @@
 [
     {
         "datasets": [
-            "bookcorpus",
-            "wikipedia"
+            "BookCorpus",
+            "English Wikipedia"
         ],
-        "language": "en",
+        "language": "English",
         "license": "apache-2.0",
         "model_tasks": [
+            "masked language modeling",
+            "next sentence prediction",
             "sequence classification",
             "token classification",
             "question answering"
@@ -14,22 +16,35 @@
         "github": "https://github.com/google-research/bert",
         "paper": "https://arxiv.org/abs/1810.04805",
         "frameworks": [
+            "pytorch",
+            "tensorflow",
+            "jax",
             "transformers"
         ],
-        "parameter_count": "110M",
-        "patch_size": null,
+        "parameter_count": "NA",
+        "patch_size": 0,
         "steps": 1000000,
-        "epochs": null,
+        "epochs": 0,
         "batchsize": 256,
-        "dropout_prob": null,
+        "dropout_prob": 0,
         "learning_rate": 0.0001,
-        "evaluation": null,
-        "hardware": "4 cloud TPUs in Pod configuration (16 TPU chips total)",
-        "limitation_and_bias": null,
-        "how_to_use": null,
-        "input_format": null,
-        "output_format": null,
-        "tokenLimit": null,
+        "evaluation": [
+            "MNLI-(m/mm)",
+            "QQP",
+            "QNLI",
+            "SST-2",
+            "CoLA",
+            "STS-B",
+            "MRPC",
+            "RTE",
+            "Average"
+        ],
+        "hardware": "4 cloud TPUs",
+        "limitation_and_bias": "Even if the training data used for this model could be characterized as fairly neutral, this model can have biased predictions",
+        "how_to_use": "The model is primarily aimed at being fine-tuned on tasks that use the whole sentence (potentially masked) to make decisions, such as sequence classification, token classification or question answering.",
+        "input_format": "NA",
+        "output_format": "NA",
+        "tokenLimit": 512,
         "vocabulary_size": 30000
     }
 ]

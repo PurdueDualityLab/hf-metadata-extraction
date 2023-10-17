@@ -35,9 +35,9 @@
   },
   "task_specific_metadata":{
     "computer-vision": {
-        "input_preprocessing": {"type": "string"},
-        "input_size": {"type":"string"}, 
-        "num_of_classes_for_classification": {"type": "number"}
+      "input_preprocessing": {"type": "string"},
+      "input_size": {"type":"string"}, 
+      "num_of_classes_for_classification": {"type": "number"}
     },
     "natural-language-processing": {
       "tokenLimit": {"type": "number"},
