@@ -20,7 +20,6 @@ import sys
 import os
 
 import keys
-import dataPreProcessing 
 import prompt
 
 os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
