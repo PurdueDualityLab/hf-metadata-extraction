@@ -119,9 +119,10 @@ for metadata in data_schema["properties"]:
 
 extraction_prompt = """
     Given relevant documents on huggingface {model_type} model {model}, extract the properties of one single entity mentioned in the 'information_extraction' function.
-    Adhere strictly to the schema.
-    If a property is not present and is not required in the function parameters, do not include it in the output.
-    If a propetry is not present and is required in the function parameters, output 'None'. 
+    Extraction rules: 
+    - Adhere strictly to the schema.
+    - If a property is not present and is not required in the function parameters, do not include it in the output.
+    - If a propetry is not present and is required in the function parameters, output 'None' instead.
     """
 print(f"extraction prompt: {extraction_prompt}\n\n")
 

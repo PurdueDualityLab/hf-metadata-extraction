@@ -17,15 +17,32 @@
       "items": {"type": "string"}
     },
     "parameter_count": {"type": "string"},
-    "patch_size": {"type": "number"},
-    "steps": {"type": "number"},
-    "epochs": {"type":"number"},
-    "batchsize": {"type":"number"},
-    "dropout_prob": {"type": "number"},
-    "learning_rate": {"type":"number"},
+    "hyper_parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "patch_size": {"type": "number"},
+          "steps": {"type": "number"},
+          "epochs": {"type":"number"},
+          "batch_size": {"type":"number"},
+          "dropout_rate": {"type": "number"},
+          "learning_rate": {"type":"number"},
+          "optimizer": {"type": "string"}, 
+          "loss function": {"type": "string"}
+        }
+      }
+    },
     "evaluation": {
       "type": "array",
-      "items": {"type": "string"}
+      "items": {
+        "type": "object",
+        "properties": {
+          "test": {"type": "string"},
+          "result":{"type": "number"}
+        },
+        "required": ["test", "results"]
+      }
     },
     "hardware": {"type":"string"},
     "limitation_and_bias": {"type":"string"},

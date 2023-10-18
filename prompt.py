@@ -27,19 +27,14 @@ METADATA_PROMPT = {
     "github": "What is the github repository associated to this model", # eval: 
     "paper": "What is the research paper associated to this model", # eval: 
     "frameworks": "What frameworks (pytorch, tensorflow, jax, transformers) are used in this model", # eval: 
-    "parameter_count": "How many parameters (# params) is the model trained on", # eval: 
-    "patch_size": "What patch size is the model trained on", # eval: 
-    "steps": "How many steps is the model trained on", # eval: 
-    "epochs": "How many epochs is the the model trained on", # eval: 
-    "batchsize": "What batchsize is the model trained on", # eval: 
-    "dropout_prob": "What is the dropout probability of the model", # eval: 
-    "learning_rate": "What learning rate is the model trained on", # eval: 
-    "evaluation": "What is the evalutaion of the model. What evaluation metrics where used", # eval: 
+    "parameter_count": "What are the number of parameters (#params) this model is trained on", # eval: 
+    "hyper_parameters": "What are the hyper parameters (epoch, steps, learning rate, optimizer) of this model", # eval: 
+    "evaluation": "What is the evalutaion of the model. What evaluation metrics where used, and what are the results", # eval: 
     "hardware": "What hardware was used to train this model", # eval: 
     "limitation_and_bias": "What are the limitations and biases of the model", # eval: 
-    "how_to_use": "how to use the model", # eval: 
-    "input_format": "What is the input format of the model", # eval: 
-    "output_format": "What is the output format of the model", # eval: 
+    "how_to_use": "provide a short paragrpah on how to use the model", # eval: 
+    "input_format": "What is form of input does the model take", # eval: 
+    "output_format": "What is form of output does the model return", # eval: 
     "input_preprocessing": "", # eval: 
     "input_size": "",  # eval: 
     "num_of_classes_for_classification": "", # eval: 
