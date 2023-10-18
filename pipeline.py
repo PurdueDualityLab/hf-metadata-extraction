@@ -110,26 +110,23 @@ for model in input_models:
         compressed_docs.extend(compression_retriever.get_relevant_documents(retriever_prompt))
         print(pretty_print_docs(compression_retriever.get_relevant_documents(retriever_prompt)))
 
-    extraction_prompt = """
-        Given relevant documents on huggingface {model_type} model {model}, extract the properties of one single entity mentioned in the 'information_extraction' function.
-        Extraction rules: 
-        - Adhere strictly to the schema.
-        - If a property is not present and is not required in the function parameters, do not include it in the output.
-        - If a propetry is not present and is required in the function parameters, output 'None' instead.
-        """
-    print(f"extraction prompt: {extraction_prompt}\n\n")
+    # extraction_prompt = """
+    #     Given relevant documents on huggingface {model_type} model {model}, extract the properties of one single entity mentioned in the 'information_extraction' function.
+    #     Extraction rules: 
+    #     - Adhere strictly to the schema.
+    #     - If a property is not present and is not required in the function parameters, do not include it in the output.
+    #     - If a propetry is not present and is required in the function parameters, output 'None' instead.
+    #     """
+    # print(f"extraction prompt: {extraction_prompt}\n\n")
 
     prompt_template = ChatPromptTemplate.from_messages(
         [
-            SystemMessage(
-                content = (extraction_prompt)
-            ),
+            SystemMessage(content = (prompt.EXTRACTION_PROMPT)),
             HumanMessagePromptTemplate.from_template("{documents}"),
         ]
     )
 
     chatbot = ChatOpenAI(temperature = 0.1, model = "gpt-3.5-turbo")
-
     chain = create_extraction_chain(schema = data_schema, llm = chatbot, prompt = prompt_template)
 
     print(data_schema)
@@ -140,7 +137,6 @@ for model in input_models:
         })
     print("\n\n")
     print(extraction_result)
-
     result[model] = extraction_result
 
 file_path = "result.json"

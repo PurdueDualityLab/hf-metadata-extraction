@@ -1,0 +1,1 @@
+# check result.json with groundtruth.json

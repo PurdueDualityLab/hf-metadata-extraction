@@ -46,7 +46,7 @@
     },
     "hardware": {"type":"string"},
     "limitation_and_bias": {"type":"string"},
-    "how_to_use": {"type":"string"},
+    "demo": {"type":"string"},
     "input_format": {"type":"string"},
     "output_format": {"type":"string"}
   },
@@ -57,7 +57,7 @@
       "num_of_classes_for_classification": {"type": "number"}
     },
     "natural-language-processing": {
-      "tokenLimit": {"type": "number"},
+      "input_token_limit": {"type": "number"},
       "vocabulary_size": {"type": "number"}
     },
     "audio": {

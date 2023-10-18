@@ -24,21 +24,51 @@
             "steps": 1000000,
             "epochs": 0,
             "batch_size": 256,
-            "dropout_rate": 0,
+            "dropout_rate": 0.0,
             "learning_rate": 0.0001,
             "optimizer": "Adam",
-            "loss function": null
+            "loss function": "None"
         },
-        "evaluation": {
-            "test": "Glue test results",
-            "result": 79.6
-        },
+        "evaluation": [
+            {
+                "test": "MNLI-(m/mm)",
+                "result": 84.6
+            },
+            {
+                "test": "QQP",
+                "result": 71.2
+            },
+            {
+                "test": "QNLI",
+                "result": 90.5
+            },
+            {
+                "test": "SST-2",
+                "result": 93.5
+            },
+            {
+                "test": "CoLA",
+                "result": 52.1
+            },
+            {
+                "test": "STS-B",
+                "result": 85.8
+            },
+            {
+                "test": "MRPC",
+                "result": 88.9
+            },
+            {
+                "test": "RTE",
+                "result": 66.4
+            }
+        ],
         "hardware": "4 cloud TPUs in Pod configuration (16 TPU chips total)",
         "limitation_and_bias": "Even if the training data used for this model could be characterized as fairly neutral, this model can have biased predictions",
-        "how_to_use": "The inputs of the model are then of the form: [...] With probability 0.5, sentence A and sentence B correspond to two consecutive sentences in the original corpus, and in the other cases, it's another random sentence in the corpus. Note that what is considered a sentence here is a consecutive span of text usually longer than a single sentence. The only constrain is that the result with the two \"sentences\" has a combined length of less than 512 tokens.",
-        "input_format": "text",
-        "output_format": "text",
-        "tokenLimit": 512,
+        "demo": "You can use this model directly with a pipeline for masked language modeling",
+        "input_format": "[CLS] Sentence A [SEP] Sentence B [SEP]",
+        "output_format": "None",
+        "input_token_limit": 512,
         "vocabulary_size": 30000
     }
 }

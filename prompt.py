@@ -32,13 +32,13 @@ METADATA_PROMPT = {
     "evaluation": "What is the evalutaion of the model. What evaluation metrics where used, and what are the results", # eval: 
     "hardware": "What hardware was used to train this model", # eval: 
     "limitation_and_bias": "What are the limitations and biases of the model", # eval: 
-    "how_to_use": "provide a short paragrpah on how to use the model", # eval: 
-    "input_format": "What is form of input does the model take", # eval: 
-    "output_format": "What is form of output does the model return", # eval: 
+    "demo": "Provide a short demo on how to use the model", # eval: 
+    "input_format": "What is the form of input the model takes", # eval: 
+    "output_format": "What is the form of output the model returns", # eval: 
     "input_preprocessing": "", # eval: 
     "input_size": "",  # eval: 
     "num_of_classes_for_classification": "", # eval: 
-    "tokenLimit": "What is the token limit of this NLP model", # eval: 
+    "input_token_limit": "What is the input token limit of this NLP model", # eval: 
     "vocabulary_size": "What is the vocabulary size of this NLP model", # eval: 
     "sample_rate": "", # eval: 
     "WER": "", # eval: 
@@ -46,3 +46,11 @@ METADATA_PROMPT = {
     "training_environment": "", # eval: 
     "SB3": "" # eval: 
 }
+
+EXTRACTION_PROMPT = \
+    "Given relevant documents on huggingface {model_type} model {model}, extract the properties of one single entity mentioned in the 'information_extraction' function.\n \
+    Extraction rules: \n \
+    - Adhere strictly to the schema\n \
+    - If a property is not present and is not required in the function parameters, do not include it in the output\n \
+    - If a propetry is not present and is required in the function parameters, output 'None' instead\n \
+    "
