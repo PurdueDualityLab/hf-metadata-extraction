@@ -1,0 +1,599 @@
+{
+    "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": [
+            "oasst_export",
+            "alpaca"
+        ],
+        "license": "apache-2.0",
+        "github": "https://github.com/LAION-AI/Open-Assistant",
+        "paper": "",
+        "upstream_model": "EleutherAI / pythia-12b-deduped",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "8",
+            "batch_size": "4",
+            "learning_rate": "6e-6",
+            "optimizer": "AdamW"
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "https://open-assistant.github.io/oasst-model-eval/?f=https%3A%2F%2Fraw.githubusercontent.com%2FOpen-Assistant%2Foasst-model-eval%2Fmain%2Fsampling_reports%2Foasst-sft%2F2023-04-03_andreaskoepf_oasst-sft-4-pythia-12b-epoch-3_5_sampling_noprefix_lottery.json%0Ahttps%3A%2F%2Fraw.githubusercontent.com%2FOpen-Assistant%2Foasst-model-eval%2Fmain%2Fsampling_reports%2Fchat-gpt%2F2023-04-11_gpt-3.5-turbo_lottery.json",
+        "input_format": "<|prompter|> and <|assistant|>. Each turn ends with a <|endoftext|> token",
+        "output_format": "output_dir: pythia_model_12b",
+        "input_token_limit": "2048",
+        "vocabulary_size": ""
+    },
+    "nomic-ai/gpt4all-j": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": [
+            "https://huggingface.co/datasets/nomic-ai/gpt4all-j-prompt-generations"
+        ],
+        "license": "apache-2.0",
+        "github": "https://github.com/nomic-ai/gpt4all",
+        "paper": "GPT4All-J: An Apache-2 Licensed Assistant-Style Chatbot",
+        "parameter_count": "",
+        "upstream_model": "https://huggingface.co/EleutherAI/gpt-j-6b",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "256",
+            "learning_rate": "2e-5",
+            "optimizer": ""
+        },
+        "evaluation": {
+            "BoolQ": 73.4,
+            "PIQA": 74.8,
+            "HellaSwag": 63.4,
+            "WinoGrande": 64.7
+        },
+        "hardware": "DGX cluster with 8 A100 80GB GPUs",
+        "limitation_and_bias": "",
+        "code_demo": "https://gpt4all.io/",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "",
+        "vocabulary_size": ""
+    },
+    "chavinlo/gpt4-x-alpaca": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": "",
+        "license": "",
+        "github": "",
+        "paper": "",
+        "upstream_model": "https://huggingface.co/chavinlo/alpaca-13b",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "3",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "",
+        "vocabulary_size": ""
+    },
+    "KoboldAI/GPT-J-6B-Janeway": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": [
+            "same dataset used by GPT-Neo-2.7B-Picard, with 20% more data in various genres"
+        ],
+        "license": "MIT",
+        "github": "",
+        "paper": "",
+        "upstream_model": "EleutherAI's GPT-J 6B model",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+        },
+        "evaluation": "",
+        "hardware": "Cloud TPU VM",
+        "limitation_and_bias": "As with all language models, it is hard to predict in advance how GPT-J will respond to particular prompts and offensive content may occur without warning",
+        "code_demo": "from transformers import pipeline\ngenerator = pipeline('text-generation', model='KoboldAI/GPT-J-6B-Janeway')\ngenerator(\"Welcome Captain Janeway, I apologize for the delay.\", do_sample=True, min_length=50)",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "",
+        "vocabulary_size": ""
+    },
+    "KoboldAI/GPT-NeoX-20B-Erebus": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": [
+            "Literotica (everything with 4.5/5 or higher)",
+            "Dataset-G (private dataset of X-rated stories)",
+            "Sexstories (everything with 90 or higher)",
+            "Doc's Lab (all stories)",
+            "Pike Dataset (novels with \"adult\" rating)",
+            "Dataset-G (private dataset of X-rated stories)",
+            "SoFurry (collection of various animals)"
+        ],
+        "license": "apache-2.0",
+        "github": "",
+        "paper": "",
+        "upstream_model": "",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+        },
+        "evaluation": "",
+        "hardware": "a TPUv3-256 TPU pod",
+        "limitation_and_bias": "Based on known problems with NLP technology, potential relevant factors include bias (gender, profession, race and religion). Warning: This model has a very strong NSFW bias!",
+        "code_demo": "",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "",
+        "vocabulary_size": ""
+    },
+    "OpenAssistant/pythia-12b-sft-v8-7k-steps": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": [
+            "oasst_export",
+            "vicuna",
+            "dolly15k",
+            "grade_school_math_instructions",
+            "code_alpaca",
+            "red_pajama",
+            "wizardlm_70k",
+            "poem_instructions"
+        ],
+        "license": "apache-2.0",
+        "github": "",
+        "paper": "",
+        "upstream_model": "https://huggingface.co/OpenAssistant/pythia-12b-pre-v8-12.5k-steps",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "8",
+            "batch_size": "4",
+            "learning_rate": "6e-6",
+            "optimizer": ""
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "",
+        "input_format": "",
+        "output_format": "output_dir: pythia_model_12b",
+        "input_token_limit": "2048",
+        "vocabulary_size": ""
+    },
+    "TheBloke/wizardLM-13B-1.0-fp16": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": [
+            "https://huggingface.co/datasets/WizardLM/WizardLM_evol_instruct_70k"
+        ],
+        "license": "apache-2.0",
+        "github": "",
+        "paper": "https://arxiv.org/abs/2304.12244",
+        "upstream_model": "LLaMa",
+        "parameter_count": "13B",
+        "hyper_parameters": {
+            "epochs": "3",
+            "batch_size": "ocmplicated",
+            "learning_rate": "2e-5",
+            "optimizer": "",
+            "lr_schedular": "cosine"
+        },
+        "evaluation": "complicated",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "complicated, links don't work",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "2048",
+        "vocabulary_size": ""
+    },
+    "mosaicml/mpt-30b-chat": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": [
+            "camel-ai/code",
+            "ehartford/wizard_vicuna_70k_unfiltered",
+            "anon8231489123/ShareGPT_Vicuna_unfiltered",
+            "teknium1/GPTeacher/roleplay-instruct-v2-final",
+            "teknium1/GPTeacher/codegen-isntruct",
+            "timdettmers/openassistant-guanaco",
+            "camel-ai/math",
+            "project-baize/baize-chatbot/medical_chat_data",
+            "project-baize/baize-chatbot/quora_chat_data",
+            "project-baize/baize-chatbot/stackoverflow_chat_data",
+            "camel-ai/biology",
+            "camel-ai/chemistry",
+            "camel-ai/ai_society",
+            "jondurbin/airoboros-gpt4-1.2",
+            "LongConversations",
+            "camel-ai/physics"
+        ],
+        "license": "cc-by-nc-sa-4.0",
+        "github": "https://github.com/mosaicml/llm-foundry/",
+        "paper": ["https://arxiv.org/pdf/2205.14135.pdf","https://arxiv.org/abs/2108.12409  "],
+        "upstream_model": "https://huggingface.co/mosaicml/mpt-30b",
+        "parameter_count": "29.95B",
+        "hyper_parameters": {
+            "epochs": "3",
+            "batch_size": "ocmplicated",
+            "learning_rate": "2e-5",
+            "optimizer": "",
+            "n_layers": "48",
+            "n_heads": "64",
+            "d_model": "7168"
+        },
+        "evaluation": "",
+        "hardware": "64 H100s",
+        "limitation_and_bias": "MPT-30B-Chat can produce factually incorrect output, and should not be relied on to produce factually accurate information. MPT-30B-Chat was trained on various public datasets. While great efforts have been taken to clean the pretraining data, it is possible that this model could generate lewd, biased or otherwise offensive outputs.",
+        "code_demo": "code snippets",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "16384",
+        "vocabulary_size": "50432"
+    },
+    "hf-internal-testing/tiny-random-bloom": {
+        "model_type": "nlp",
+        "model_tasks": "text generation",
+        "frameworks": [
+            "pytorch",
+            "transformers"
+        ],
+        "datasets": [],
+        "license": "",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "gpt2",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "",
+        "vocabulary_size": ""
+    },
+    "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis": {
+        "model_type": "nlp",
+        "model_tasks": "text classification",
+        "frameworks": [
+            "pytorch",
+            "transformers",
+            "tensorboards",
+            "safetensors"
+        ],
+        "datasets": [
+            "financial_phrasebank"
+        ],
+        "license": "apache-2.0",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "https://huggingface.co/distilroberta-base",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "5",
+            "batch_size": "8",
+            "learning_rate": "2e-05",
+            "optimizer": "Adam",
+            "lr_schedular": "linear",
+            "seed": "42"
+        },
+        "evaluation": {
+            "loss": "0.1116",
+            "accuracy": "0.9823"   
+        },
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "",
+        "vocabulary_size": ""
+    },
+    "LiYuan/amazon-query-product-ranking": {
+        "model_type": "nlp",
+        "model_tasks": "text classification",
+        "frameworks": [
+            "pytorch",
+            "transformers",
+            "tensorboards"
+        ],
+        "datasets": [
+            "https://www.aicrowd.com/challenges/esci-challenge-for-improving-product-search"
+        ],
+        "license": "apache-2.0",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "https://huggingface.co/distilbert-base-uncased",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "2",
+            "batch_size": "16",
+            "learning_rate": "2e-05",
+            "optimizer": "Adam",
+            "lr_schedular": "linear",
+            "seed": "42"
+
+        },
+        "evaluation": {
+            "loss": "0.8244",
+            "accuracy": "0.6617"
+        },
+        "hardware": "",
+        "limitation_and_bias": "The limitations are this trained model is focusing on queries and products on Amazon. If you apply this model to other domains, it may perform poorly.",
+        "code_demo": "You can use this model directly by downloading the trained weights and configurations like the below code snippet: \n from transformers import AutoTokenizer, AutoModelForSequenceClassification \n tokenizer = AutoTokenizer.from_pretrained(\"LiYuan/amazon-query-product-ranking\")\n model = AutoModelForSequenceClassification.from_pretrained(\"LiYuan/amazon-query-product-ranking\")",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "",
+        "vocabulary_size": ""
+    },
+    "laion/mscoco_finetuned_CoCa-ViT-L-14-laion2B-s13B-b90k": {
+        "model_type": "cv/multimodla",
+        "model_tasks": "image_to_text",
+        "frameworks": [
+            "openclip"
+        ],
+        "datasets": [],
+        "license": "MIT",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "",
+        "input_format": "",
+        "output_format": "",
+        "input_token_limit": "",
+        "vocabulary_size": ""
+    }, 
+    "hf-internal-testing/tiny-stable-diffusion-pipe": {
+        "model_type": "cv/multimodal",
+        "model_tasks": "text_to_image",
+        "frameworks": [
+            "diffusers"
+        ],
+        "datasets": [],
+        "license": "",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "",
+        "input_format": "",
+        "output_format": "",
+        "input_preprocessing": "",
+        "input_size": "",
+        "num_of_classes_for_classification": "",
+        "trigger_words": ""
+    },
+    "darkstorm2150/Protogen_v2.2_Official_Releas": {
+        "model_type": "cv/multimodal",
+        "model_tasks": "text_to_image",
+        "frameworks": [
+            "diffusers"
+        ],
+        "datasets": [
+            "large datasets new and trending on civitai.com"
+        ],
+        "license": "creativeml-openrail-m",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "https://huggingface.co/runwayml/stable-diffusion-v1-5",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "This model can be used just like any other Stable Diffusion model. For more information, please have a look at the Stable Diffusion Pipeline.",
+        "input_format": "",
+        "output_format": "",
+        "input_preprocessing": "",
+        "input_size": "",
+        "num_of_classes_for_classification": "",
+        "trigger_words": "modelshoot style\n Trigger words are also available for the hassan1.4 and f222, might have to google them :)"
+    },
+    "DeepFloyd/IF-II-L-v1.0": {
+        "model_type": "cv/multimodal",
+        "model_tasks": "text_to_image",
+        "frameworks": [
+            "diffusers",
+            "pytorch"
+        ],
+        "datasets": [
+            "COCO"
+        ],
+        "license": "deepfloyd-if-license",
+        "github": "https://github.com/deep-floyd/IF",
+        "paper": [""],
+        "upstream_model": "",
+        "parameter_count": "1.2 B",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "1536",
+            "start_learning_rate": "4e-6",
+            "max_learning_rate": "1e-4",
+            "final_learning_rate": "1e-8",
+            "optimizer": "AdamW8bit + DeepSpeed ZeRO-1",
+            "lr_schedular": "OneCycleLR cosine",
+            "warmup": "10000 steps"
+        },
+        "evaluation": {
+            "FID-30K": "6.66"
+        },
+        "hardware": "32 x 8 x A100 GPUs",
+        "limitation_and_bias": "The model does not achieve perfect photorealism. \nThe model was trained mainly with English captions and will not work as well in other languages.\n The model was trained on a subset of the large-scale dataset LAION-5B, which contains adult, violent and sexual content\n  can also reinforce or exacerbate social biases",
+        "code_demo":"",
+        "input_format": "",
+        "output_format": "Images are cropped to square via shifted-center-crop augmentation (randomly shift from center up to 0.1 of size) and resized to 64px (low-res) and 256px (ground-truth) using Pillow==9.2.0 BICUBIC resampling with reducing_gap=None (it helps to avoid aliasing) and processed to tensor BxCxHxW",
+        "input_preprocessing": "Text prompts are encoded through open-sourced frozen T5-v1_1-xxl text-encoder (that completely was trained by Google team), random 10% of texts are dropped to empty string to add ability for classifier free guidance (CFG)",
+        "input_size": "256x256",
+        "num_of_classes_for_classification": "",
+        "trigger_words": ""
+    },
+    "proximasanfinetuning/luna-diffusion": {
+        "model_type": "cv/multimodal",
+        "model_tasks": "text_to_image",
+        "frameworks": [
+            "diffusers"
+        ],
+        "datasets": [
+            " a few hundred & mostly hand-captioned highres images on SD 1.5 for ethereal, painterly vibes"
+        ],
+        "license": "CreativeML OpenRAIL-M",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "https://huggingface.co/runwayml/stable-diffusion-v1-5",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "This model can be used just like any other Stable Diffusion model. For more information, please have a look at the Stable Diffusion Pipeline.",
+        "input_format": "works best at 768x768 px, 512x768 px or 768x512 px",
+        "output_format": "",
+        "input_preprocessing": "",
+        "input_size": "",
+        "num_of_classes_for_classification": "",
+        "trigger_words": ["painting", "illustrations"]
+    },
+    "Lykon/DreamShaper": {
+        "model_type": "cv/multimodal",
+        "model_tasks": "text_to_image",
+        "frameworks": [
+            "diffusers"
+        ],
+        "datasets": [],
+        "license": "other",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "https://civitai.com/models/4384/dreamshaper",
+        "input_format": "",
+        "output_format": "",
+        "input_preprocessing": "",
+        "input_size": "",
+        "num_of_classes_for_classification": "",
+        "trigger_words": ""
+    },
+    "ydshieh/vit-gpt2-coco-en   ": {
+        "model_type": "cv/multimodal",
+        "model_tasks": "text_to_image",
+        "frameworks": [
+            "diffusers"
+        ],
+        "datasets": [],
+        "license": "other",
+        "github": "",
+        "paper": [""],
+        "upstream_model": "",
+        "parameter_count": "",
+        "hyper_parameters": {
+            "epochs": "",
+            "batch_size": "",
+            "learning_rate": "",
+            "optimizer": ""
+        },
+        "evaluation": "",
+        "hardware": "",
+        "limitation_and_bias": "",
+        "code_demo": "https://civitai.com/models/4384/dreamshaper",
+        "input_format": "",
+        "output_format": "",
+        "input_preprocessing": "",
+        "input_size": "",
+        "num_of_classes_for_classification": "",
+        "trigger_words": ""
+    }
+}
