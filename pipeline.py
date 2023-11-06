@@ -24,11 +24,21 @@ import prompt
 
 os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 
-with open("input.json", 'r') as json_file:
-    input_models = json.load(json_file)
+parser = argparse.ArgumentParser(description="Python Script with Different Modes")
+parser.add_argument("--data", choices = ["input", "filtered"], required= True, help = "Select to run through input data set or filtered model set")
+parser.add_argument("--start", type = int, help= "Select which model index to start from in filtered_models.json file")
+parser.add_argument("--range", type = int, help= "Select number of models to run through")
+args = parser.parse_args()
 
-with open("filtered_models.json", 'r') as json_file:
-    data = json.load(json_file)
+if args.data == "input":
+    with open("input.json", 'r') as json_file:
+        data = json.load(json_file)
+
+if args.data == "filtered":
+    if args.start is None or args.range is None:
+        parser.error("for filtered data, starting index and range required.")
+    with open("filtered_models.json", 'r') as json_file:
+        data = json.load(json_file)
 
 with open("metaSchema.json", 'r') as json_file:
     schema = json.load(json_file)
@@ -101,9 +111,8 @@ def get_data_schema(model_type: str, model_tasks: list, frameworks: list) -> (di
         return (pre_extraction_data, metadata_schema)
     return (pre_extraction_data, {"properties": general_schema})
 
-
 def pretty_print_docs(docs, metadata):
-    return f"{'-' * 20} {metadata} {'-' * 20}\n" + f"\n{'-' * 30}\n".join([f"Document {i+1}:\n\n" + d.page_content for i, d in enumerate(docs)]) + "\n"
+    return f"{'-' * 20} {metadata} {'-' * 20}\n\n" + f"\n{'-' * 30}\n".join([f"Document {i+1}:\n\n" + d.page_content for i, d in enumerate(docs)]) + "\n\n"
 
 def log(text: str):
     with open("log.txt", 'a') as the_log:
@@ -122,58 +131,80 @@ def log_list(content: str):
 log("Metadata Prompt: \n\n " + str(prompt.METADATA_PROMPT) + "\n")
 log("Extraction Prompt: \n\n" + str(prompt.EXTRACTION_PROMPT) + "\n")
 
-start_time = time.time()
+if args.data == "input":
+    models_iterable = data
 
+if args.data == "filtered":
+    data = data.keys()
+    start_index = args.start
+    end_index = start_index + args.range
+    models_iterable = data[start_index: end_index]
+
+start_time = time.time()
 result = {}
 
-#model = input("Input model ID: ")
-for model in input_models:
-    card = load_card(model)
-    log(f"\n#####################{model}########################\n\n")
-    model_type, model_tasks = get_type_and_task(model)
-    frameworks = get_frameworks(model)
-    pre_extract, data_schema = get_data_schema(model_type, model_tasks, frameworks)
+#change between filtered_models and input_models
+for model in models_iterable:
+    try:
+        card = load_card(model)
+        card = card.replace('"', "'")
+        log(f"\n#####################{model}########################\n\n")
+        model_type, model_tasks = get_type_and_task(model)
+        frameworks = get_frameworks(model)
+        pre_extract, data_schema = get_data_schema(model_type, model_tasks, frameworks)
 
-    headers_to_split_on = [("#", "header 1"), ("##", "header 2"), ("###", "header 3")]
-    markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on = headers_to_split_on)
-    md_header_splits = markdown_splitter.split_text(card)
-    #print(md_header_splits)
+        headers_to_split_on = [("#", "header 1"), ("##", "header 2"), ("###", "header 3")]
+        markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on = headers_to_split_on)
+        md_header_splits = markdown_splitter.split_text(card)
+        #print(md_header_splits)
 
-    vector_store = FAISS.from_documents(md_header_splits, OpenAIEmbeddings(allowed_special={'<|endoftext|>', '<|prompter|>', '<|assistant|>'}))
-    llm = OpenAI(temperature = 0)
-    compressed_docs = ""
-    for metadata in data_schema["properties"]:
-        retriever = vector_store.as_retriever(search_kwargs = {"k": 3})
-        retriever_prompt = prompt.METADATA_PROMPT[metadata]
-        # docs = list of doc objects
-        docs = retriever.get_relevant_documents(retriever_prompt)
-        #print(pretty_print_docs(docs, metadata))
-        compressor = LLMChainExtractor.from_llm(llm)
-        compression_retriever = ContextualCompressionRetriever(base_compressor = compressor, base_retriever = retriever)
-        compressed_docs += pretty_print_docs(compression_retriever.get_relevant_documents(retriever_prompt + f" (Do not remove keyword \"{metadata}\") in compressed doc"), metadata)
-    log(compressed_docs)
+        vector_store = FAISS.from_documents(md_header_splits, OpenAIEmbeddings(allowed_special={'<|endoftext|>', '<|prompter|>', '<|assistant|>'}))
+        llm = OpenAI(temperature = 0, model_name = "gpt-3.5-turbo")
+        compressed_docs = ""
+        for metadata in data_schema["properties"]:
+            retriever = vector_store.as_retriever(search_kwargs = {"k": 3})
+            retriever_prompt = prompt.METADATA_PROMPT[metadata]
+            # docs = list of doc objects
+            docs = retriever.get_relevant_documents(retriever_prompt)
+            compressor = LLMChainExtractor.from_llm(llm)
+            compression_retriever = ContextualCompressionRetriever(base_compressor = compressor, base_retriever = retriever)
+            compressed_docs += pretty_print_docs(compression_retriever.get_relevant_documents(retriever_prompt + f" (Do not remove keyword \"{metadata}\" in compressed doc)"), metadata)
+        log(compressed_docs)
 
-    prompt_template = ChatPromptTemplate.from_messages(
-        [
-            SystemMessage(content = (prompt.EXTRACTION_PROMPT)),
-            HumanMessagePromptTemplate.from_template("{documents}"),
-        ]
-    )
+        prompt_template = ChatPromptTemplate.from_messages(
+            [
+                SystemMessage(content = (prompt.EXTRACTION_PROMPT)),
+                HumanMessagePromptTemplate.from_template("{documents}"),
+            ]
+        )
 
-    chatbot = ChatOpenAI(temperature = 0.1, model = "gpt-3.5-turbo")
-    chain = create_extraction_chain(schema = data_schema, llm = chatbot, prompt = prompt_template)
+        chatbot = ChatOpenAI(temperature = 0.1, model = "gpt-3.5-turbo")
+        chain = create_extraction_chain(schema = data_schema, llm = chatbot, prompt = prompt_template)
 
-    extraction_result = chain.run({
-        "model_type": model_type,
-        "model": model,
-        "documents": compressed_docs
-        })
-    log_list("\n" + str(extraction_result))
-    result[model] = {**pre_extract, **extraction_result[0]}
+        extraction_result = chain.run({
+            "model_type": model_type,
+            "model": model,
+            "documents": compressed_docs
+            })
+
+        
+        log_list("\n" + str(extraction_result))
+        if type(extraction_result) == list:
+            result[model] = {**pre_extract, **extraction_result[0]}
+        else:
+            result[model] = {**pre_extract, **extraction_result}
+
+    #exceed token limit of 4096
+    except Exception as e:
+
+        log(f"\nERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n {str(e)} \n")
+        result[model] = str(e)
+        
 
     #For eval purposes
     with open("result.json", "w") as json_file:
         json.dump(result, json_file, indent = 4)
+
 
 # file_path = "result.json"
 # with open(file_path, "w") as json_file:
