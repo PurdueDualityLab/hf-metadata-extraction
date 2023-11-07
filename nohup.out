@@ -1,0 +1,17 @@
+/home/shen/miniconda3/envs/ptm_env/lib/python3.8/site-packages/langchain/chains/llm.py:280: UserWarning: The predict_and_parse method is deprecated, instead pass an output parser directly to LLMChain.
+  warnings.warn(
+Repo card metadata block was not found. Setting CardData to empty.
+Retrying langchain.embeddings.openai.embed_with_retry.<locals>._embed_with_retry in 4.0 seconds as it raised APIError: The server had an error while processing your request. Sorry about that! You can retry your request, or contact us through our help center at help.openai.com if the error persists. (Please include the request ID cb19471ff21e990c5d025b30d8e22db7 in your message.) {
+  "error": {
+    "message": "The server had an error while processing your request. Sorry about that! You can retry your request, or contact us through our help center at help.openai.com if the error persists. (Please include the request ID cb19471ff21e990c5d025b30d8e22db7 in your message.)",
+    "type": "server_error",
+    "param": null,
+    "code": null
+  }
+}
+ 500 {'error': {'message': 'The server had an error while processing your request. Sorry about that! You can retry your request, or contact us through our help center at help.openai.com if the error persists. (Please include the request ID cb19471ff21e990c5d025b30d8e22db7 in your message.)', 'type': 'server_error', 'param': None, 'code': None}} {'Date': 'Mon, 06 Nov 2023 20:42:41 GMT', 'Content-Type': 'application/json', 'Content-Length': '366', 'Connection': 'keep-alive', 'access-control-allow-origin': '*', 'openai-organization': 'dualitylab', 'openai-processing-ms': '30007', 'openai-version': '2020-10-01', 'strict-transport-security': 'max-age=15724800; includeSubDomains', 'x-ratelimit-limit-requests': '5000', 'x-ratelimit-limit-tokens': '1000000', 'x-ratelimit-remaining-requests': '4999', 'x-ratelimit-remaining-tokens': '999975', 'x-ratelimit-reset-requests': '12ms', 'x-ratelimit-reset-tokens': '1ms', 'x-request-id': 'cb19471ff21e990c5d025b30d8e22db7', 'CF-Cache-Status': 'DYNAMIC', 'Server': 'cloudflare', 'CF-RAY': '8220295f98d520e5-IND', 'alt-svc': 'h3=":443"; ma=86400'}.
+Downloading (…)solve/main/README.md:   0%|          | 0.00/5.86k [00:00<?, ?B/s]Downloading (…)solve/main/README.md: 100%|██████████| 5.86k/5.86k [00:00<00:00, 914kB/s]
+Downloading (…)solve/main/README.md:   0%|          | 0.00/2.86k [00:00<?, ?B/s]Downloading (…)solve/main/README.md: 100%|██████████| 2.86k/2.86k [00:00<00:00, 254kB/s]
+/home/shen/miniconda3/envs/ptm_env/lib/python3.8/site-packages/langchain/chains/llm.py:280: UserWarning: The predict_and_parse method is deprecated, instead pass an output parser directly to LLMChain.
+  warnings.warn(
+Repo card metadata block was not found. Setting CardData to empty.

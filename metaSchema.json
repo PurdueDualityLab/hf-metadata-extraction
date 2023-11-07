@@ -31,7 +31,7 @@
         "type": "object",
         "properties": {
           "test": {"type": "string"},
-          "result":{"type": "number"}
+          "result":{"type": "string"}
         },
         "required": ["test", "results"]
       }
@@ -47,17 +47,14 @@
     },
     "computer-vision": {
       "input_preprocessing": {"type": "string"},
-      "input_size": {"type":"string"}, 
-      "num_of_classes_for_classification": {"type": "string"},
-      "trigger_word": {"type": "string"}
+      "input_size": {"type":"string"}
     },
     "natural-language-processing": {
-      "input_token_limit": {"type": "string"},
+      "max_sequence_length": {"type": "string"},
       "vocabulary_size": {"type": "string"}
     },
     "audio": {
-      "sample_rate": {"type": "string"},
-      "WER": {"type": "string"}
+      "sample_rate": {"type": "string"}
     },
     "tabular": {
     },
