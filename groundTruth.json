@@ -581,7 +581,7 @@
             "pytorch",
             "safetensors"
         ],
-        "datasets": [],
+        "datasets": ["Babelscape/rebel-dataset"],
         "license": "cc-by-nc-sa-4.0",
         "github": "https://github.com/Babelscape/rebel",
         "paper": [
@@ -650,7 +650,7 @@
         ],
         "datasets": ["https://figshare.com/articles/dataset/MACCROBAT2018/9764942"],
         "license": "apache-2.0",
-        "github": "",
+        "github": "https://github.com/dreji18/Bio-Epidemiology-NER",
         "paper": [""],
         "upstream_model": "distilbert-base-uncased",
         "parameter_count": "",
@@ -679,7 +679,7 @@
             "jax",
             "safetensors"
         ],
-        "datasets": ["https://aclanthology.org/W03-0419.pdf"],
+        "datasets": ["https://aclanthology.org/W03-0419.pdf or conll2003"],
         "license": "mit",
         "github": "",
         "paper": [""],
@@ -691,8 +691,29 @@
             "learning_rate": "",
             "optimizer": ""
         },
-        "evaluation": {},
-        "hardware": "",
+        "evaluation": [
+            {
+                "test": "accuracy",
+                "result": "90.3"
+            },
+            {
+                "test": "precision",
+                "result": "92.0"
+            },
+            {
+                "test": "recall",
+                "result": "91.9"
+            },
+            {
+                "test": "f1",
+                "result": "91.7"
+            },
+            {
+                "test": "loss",
+                "result": "50.8"
+            }
+        ],
+        "hardware": "NVIDIA V100 GPU",
         "limitation_and_bias": "",
         "code_demo": "",
         "input_format": "",
@@ -755,7 +776,7 @@
             "jax"
         ],
         "datasets": ["https://github.com/josecannete/spanish-corpora"],
-        "license": "",
+        "license": "CC BY 4.0",
         "github": "",
         "paper": [""],
         "upstream_model": "https://github.com/google-research/bert",
@@ -1007,9 +1028,9 @@
             "tensorboard",
             "safetensors"
         ],
-        "datasets": [""],
+        "datasets": ["56MB of dialogue data gathered from multiple sources, which includes both real _and_ partially machine-generated conversations."],
         "license": "agpl-3.0",
-        "github": "",
+        "github": "https://github.com/PygmalionAI/gradio-ui/blob/master/notebooks/GPU.ipynb",
         "paper": [""],
         "upstream_model": "https://huggingface.co/EleutherAI/pythia-1.4b-deduped-v0",
         "parameter_count": "",
@@ -1068,7 +1089,7 @@
         "evaluation": {
         },
         "hardware": "7 TPUs v3-8,",
-        "limitation_and_bias": "",
+        "limitation_and_bias": "Note that there is a limit of 512 word pieces: Text longer than that will be truncated. Further note that the model was just trained on input text up to 250 word pieces. It might not work well for longer text.",
         "code_demo": "",
         "input_format": "",
         "output_format": "",
@@ -1132,7 +1153,7 @@
         "evaluation": {
         },
         "hardware": "",
-        "limitation_and_bias": "However, the model is mostly meant to be fine-tuned on a supervised dataset",
+        "limitation_and_bias": "",
         "code_demo": "Here is how to use this model in PyTorch:",
         "input_format": "",
         "output_format": ""
@@ -1141,7 +1162,7 @@
         "model_type": "multimodal",
         "model_tasks": "feature extraction",
         "frameworks": [
-            "sentence transformers",
+            "sentence-transformers",
             "pytorch"
         ],
         "datasets": [
@@ -1324,10 +1345,11 @@
         "upstream_model": " Stable Diffusion v1.5",
         "parameter_count": "",
         "hyper_parameters": {
-            "epochs": "",
+            "epochs": "4",
             "batch_size": "",
             "learning_rate": "",
-            "optimizer": ""
+            "optimizer": "",
+            "steps": "12400"
         },
         "evaluation": "",
         "hardware": "",
@@ -1782,7 +1804,7 @@
         },
         "hardware": "",
         "limitation_and_bias": "the models are trained in a weakly supervised manner using large-scale noisy data, the predictions may include texts that are not actually spoken in the audio input (i.e. hallucination). We hypothesize that this happens because, given their general knowledge of language, the models combine trying to predict the next word in audio with trying to transcribe the audio itself.Our models perform unevenly across languages, and we observe lower accuracy on low-resource and/or low-discoverability languages or languages where we have less training data. The models also exhibit disparate performance on different accents and dialects of particular languages, which may include higher word error rate across speakers of different genders, races, ages, or other demographic criteria. Our full evaluation results are presented in the paper accompanying this release",
-        "code_demo": "",
+        "code_demo": "The blog post [Fine-Tune Whisper with \ud83e\udd17 Transformers](https://huggingface.co/blog/fine-tune-whisper) provides a step-by-step guide to fine-tuning the Whisper model with as little as 5 hours of labelled data.",
         "input_format": "",
         "output_format": "",
         "sample_rate": ""

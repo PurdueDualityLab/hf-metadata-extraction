@@ -1,20 +1,48 @@
 {
-  "general_metadata": {
-    "model_type": {"type": "string"},
-    "model_tasks": {"type": "string"},
+  "pre_processed_metadata":{
+    "domain": {
+      "type": "array", 
+      "items": {"type": "string"}
+    },
+    "model_task": {
+      "type": "array", 
+      "items": {"type": "string"}
+    },
     "frameworks": {
       "type": "array",
       "items": {"type": "string"}
     },
-    "datasets": {
+    "libraries": {
       "type": "array",
       "items": {"type": "string"}
+    }
+  },
+  "simple_metadata": {
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "license": {"type": "string"},
-    "github": {"type": "string", "format": "uri"},
-    "paper": {"type": "string", "format": "uri"},
-    "upstream_model": {"type": "string"},
-    "parameter_count": {"type": "string"},
+    "github": {
+      "type": "string", 
+      "format": "uri"
+    },
+    "paper": {
+      "type": "string", 
+      "format": "uri"
+    },
+    "upstream_model": {
+      "type": "string"
+    },
+    "parameter_count": {
+      "type": "string",
+      "pattern": "^(|[0-9]+[MBT])$"
+    },
+    "hardware": {"type":"string"}
+  },
+  "complex_metadata":{
     "hyper_parameters": {
       "type": "object",
       "properties": {
@@ -31,37 +59,15 @@
         "type": "object",
         "properties": {
           "test": {"type": "string"},
+          "dataset": {"type": "string"},
           "result":{"type": "string"}
         },
-        "required": ["test", "results"]
+      "required": ["test", "results"]
       }
     },
-    "hardware": {"type":"string"},
     "limitation_and_bias": {"type":"string"},
     "demo": {"type":"string"},
     "input_format": {"type":"string"},
     "output_format": {"type":"string"}
-  },
-  "task_specific_metadata":{
-    "multimodal":{
-    },
-    "computer-vision": {
-      "input_preprocessing": {"type": "string"},
-      "input_size": {"type":"string"}
-    },
-    "natural-language-processing": {
-      "max_sequence_length": {"type": "string"},
-      "vocabulary_size": {"type": "string"}
-    },
-    "audio": {
-      "sample_rate": {"type": "string"}
-    },
-    "tabular": {
-    },
-    "reinforcement-learning": {
-      "agent": {"type": "string"},
-      "training_environment": {"type": "string"},
-      "SB3": {"type": "boolean"}
-    }
   }
 }
