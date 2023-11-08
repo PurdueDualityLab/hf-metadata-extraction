@@ -132,12 +132,17 @@ for model in models_iterable:
         for metadata in data_schema[key]["properties"]:
             retriever = vector_store.as_retriever(search_kwargs = {"k": 3})
             retriever_prompt = prompt.METADATA_PROMPT[metadata]
-            #log(pretty_print_docs(docs, metadata))
-            compressor = LLMChainExtractor.from_llm(llm)
-            compression_retriever = ContextualCompressionRetriever(base_compressor = compressor, base_retriever = retriever)
-            single_compressed_docs = compression_retriever.get_relevant_documents(retriever_prompt + f" Keep surrounding context in compressed document.")
-            compressed_docs += pretty_print_docs(single_compressed_docs, "compressed" + metadata)
-            log(pretty_print_docs(single_compressed_docs, "compressed " + metadata))    
+            
+            docs = retriever.get_relevant_documents(retriever_prompt)
+            compressed_docs += pretty_print_docs(docs, metadata)
+            log(pretty_print_docs(docs, metadata))
+            
+            # compressor = LLMChainExtractor.from_llm(llm)
+            # compression_retriever = ContextualCompressionRetriever(base_compressor = compressor, base_retriever = retriever)
+            # single_compressed_docs = compression_retriever.get_relevant_documents(retriever_prompt + f" Keep surrounding context in compressed document. ")
+            # compressed_docs += pretty_print_docs(single_compressed_docs, metadata)
+            # log(pretty_print_docs(single_compressed_docs, "compressed " + metadata))   
+             
         chain = create_extraction_chain(schema = data_schema[key], llm = chatbot, prompt = extraction_prompt[key])
         extraction_result = chain.run({
             "domain": model_result["domain"],

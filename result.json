@@ -1,417 +1,29 @@
 {
-    "OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "oasst_export"
-        ],
-        "license": "apache-2.0",
-        "github": "https://github.com/LAION-AI/Open-Assistant",
-        "paper": "https://github.com/LAION-AI/Open-Assistant/tree/main/model/model_training",
-        "upstream_model": "Pythia 12B",
-        "parameter_count": "reference-pythia-12b:\ndtype: fp16\nlog_dir: 'pythia_log_12b'\nlearning_rate: 6e-6\nmodel_name: EleutherAI/pythia-12b-deduped\noutput_dir: pythia_model_12b\nweight_decay: 0.0\nmax_length: 2048\nwarmup_steps: 100\ngradient_checkpointing: true\ngradient_accumulation_steps: 2\nper_device_train_batch_size: 4\nper_device_eval_batch_size: 4\neval_steps: 100\nsave_steps: 1000\nnum_train_epochs: 8\nsave_total_limit: 4",
-        "hyper_parameters": {
-            "learning_rate": "6e-6",
-            "num_train_epochs": "8"
-        },
-        "evaluation": [
-            {
-                "test": "wandb",
-                "result": "https://wandb.ai/open-assistant/supervised-finetuning/runs/770a0t41"
-            }
-        ],
-        "hardware": "wandb: https://wandb.ai/open-assistant/supervised-finetuning/runs/770a0t41\nbase model: [andreaskoepf/pythia-12b-pre-2000](https://huggingface.co/andreaskoepf/pythia-12b-pre-2000)\ncheckpoint: 4000 steps\ncommand: `deepspeed trainer_sft.py --configs defaults reference-data reference-pythia-12b --cache_dir /home/ubuntu/data_cache --output_dir .saved/oasst-sft-3-pythia-12b-reference_2kpre --num_train_epochs 8 --residual_dropout 0.2 --deepspeed --use_flash_attention true --model_name andreaskoepf/pythia-12b-pre-2000`",
-        "limitation_and_bias": "It is based on a Pythia 12B that was fine-tuned on human demonstrations of assistant conversations collected through the [https://open-assistant.io/](https://open-assistant.io/) human feedback web app before March 25, 2023.",
-        "demo": "It is based on a Pythia 12B that was fine-tuned on human demonstrations\nof assistant conversations collected through the\n[https://open-assistant.io/](https://open-assistant.io/) human feedback web\napp before March 25, 2023.",
-        "input_format": "data:\n```\nreference-data:\ndatasets:\n- oasst_export:\nlang: 'bg,ca,cs,da,de,en,es,fr,hr,hu,it,nl,pl,pt,ro,ru,sl,sr,sv,uk'\ninput_file_path: 2023-03-25_oasst_research_ready_synth_labels.jsonl.gz\nval_split: 0.05\n- alpaca\nsort_by_length: false\nuse_custom_sampler: false\n```",
-        "output_format": "fp16",
-        "max_sequence_length": "max_sequence_length",
-        "vocabulary_size": ""
-    },
-    "nomic-ai/gpt4all-j": "Could not parse function call data: Unterminated string starting at: line 58 column 23 (char 1666)",
-    "microsoft/biogpt": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "BioGPT"
-        ],
-        "license": "mit",
-        "github": "https://doi.org/10.1093/bib/bbac409",
-        "paper": "https://doi.org/10.1093/bib/bbac409",
-        "upstream_model": "BioGPT",
-        "parameter_count": "",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "KoboldAI/GPT-NeoX-20B-Erebus": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "Literotica",
-            "Sexstories",
-            "Dataset-G",
-            "Doc's Lab",
-            "Pike Dataset",
-            "SoFurry"
-        ],
-        "license": "apache-2.0",
-        "github": "https://github.com/kingoflolz/mesh-transformer-jax",
-        "paper": "https://arxiv.org/abs/2204.06745",
-        "upstream_model": "GPT-NeoX-20B",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "TPUv3-256 TPU pod",
-        "limitation_and_bias": "bias (gender, profession, race and religion). **Warning: This model has a very strong NSFW bias!**",
-        "demo": "**Warning: This model has a very strong NSFW bias!**",
-        "input_format": "The dataset uses `[Genre: <comma-separated list of genres>]` for tagging.",
-        "output_format": "The dataset uses `[Genre: <comma-separated list of genres>]` for tagging.",
-        "max_sequence_length": "max_sequence_length",
-        "vocabulary_size": ""
-    },
-    "tiiuae/falcon-7b-instruct": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "Falcon-7B-Instruct"
-        ],
-        "license": "apache-2.0",
-        "github": "tiiuae/falcon-refinedweb",
-        "paper": "",
-        "upstream_model": "Falcon-7B",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "TheBloke/wizardLM-13B-1.0-fp16": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [],
-        "license": "The resources, including code, data, and model weights, associated with this project are restricted for academic research purposes only and cannot be used for commercial purposes.",
-        "github": "1. [Online Demo](#online-demo)\n2. [Training Data](#training-data)\n3. [WizardLM Weights](#wizardlm-weights)\n4. [Fine-tuning](#fine-tuning)\n5. [Distributed Fine-tuning](#distributed-Fine-tuning)\n6. [Inference](#inference)\n7. [Evaluation](#evaluation)\n8. [Citation](#citation)\n9. [Disclaimer](#disclaimer)",
-        "paper": "@misc{xu2023wizardlm,\ntitle={WizardLM: Empowering Large Language Models to Follow Complex Instructions},\nauthor={Can Xu and Qingfeng Sun and Kai Zheng and Xiubo Geng and Pu Zhao and Jiazhan Feng and Chongyang Tao and Daxin Jiang},\nyear={2023},\neprint={2304.12244},\narchivePrefix={arXiv},\nprimaryClass={cs.CL}\n}",
-        "upstream_model": "",
-        "parameter_count": "--num_train_epochs 3 \\n--model_max_length 2048 \\n--per_device_train_batch_size 8 \\n--per_device_eval_batch_size 1 \\n--gradient_accumulation_steps 1 \\n--learning_rate 2e-5 \\n--warmup_steps 2 \\n--lr_scheduler_type 'cosine'",
-        "hyper_parameters": {
-            "epochs": "3",
-            "batch_size": "8",
-            "learning_rate": "2e-5",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "The content produced by any version of WizardLM is influenced by uncontrollable variables such as randomness, and therefore, the accuracy of the output cannot be guaranteed by this project. This project does not accept any legal liability for the content of the model output, nor does it assume responsibility for any losses incurred due to the use of associated resources and output results.",
-        "demo": "[Demo Link](https://011fc8477ad734d7.gradio.app)  \n[Demo Backup 1](https://1825e531c43a23c7.gradio.app)",
-        "input_format": "",
-        "output_format": "- `output`: `str`, the answer to the instruction as generated by `gpt-3.5-turbo`.",
-        "max_sequence_length": "To obtain results **identical to our demo**, please strictly follow the prompts and invocation methods provided in the **'src/infer_wizardlm13b.py'** to use our 13B model for inference. Unlike the 7B model, the 13B model adopts the prompt format from Vicuna and supports **multi-turn** conversation.",
-        "vocabulary_size": "- \ud83d\udd25 We released **13B** version of **WizardLM** trained with **250k** evolved instructions (from ShareGPT). Checkout the [Demo_13B](https://a6d4f31b5a1ee33f.gradio.app/), [Demo_13B_bak](https://e79c80d2c2379e77.gradio.app) and the GPT-4 evaluation. Please download our delta model at the following [link](https://huggingface.co/victor123/WizardLM-13B-1.0).\n- \ud83d\udd25 We released **7B** version of **WizardLM** trained with **70k** evolved instructions (from Alpaca data). Checkout the [paper](https://arxiv.org/abs/2304.12244) and [Demo_7B](https://f195ccdce69a86d5.gradio.app) , [Demo_7B_bak](https://ce25bd0feced0f77.gradio.app)\n- <b>Note for 13B model usage:</b> To obtain results **identical to our demo**, please strictly follow the prompts and invocation methods provided in the **'src/infer_wizardlm13b.py'** to use our 13B model for inference. Unlike the 7B model, the 13B model adopts the prompt format from Vicuna and supports **multi-turn** conversation."
-    },
-    "mosaicml/mpt-30b-chat": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "Airoboros/GPT4-1.2",
-            "Baize",
-            "Camel",
-            "GPTeacher",
-            "Guanaco",
-            "LongCoversations",
-            "ShareGPT",
-            "WizardLM"
-        ],
-        "license": "",
-        "github": "",
-        "paper": "",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "cross-encoder/ms-marco-MiniLM-L-2-v2": "This model's maximum context length is 4097 tokens. However, your messages resulted in 4238 tokens (4081 in the messages, 157 in the functions). Please reduce the length of the messages or functions.",
-    "Hello-SimpleAI/chatgpt-detector-roberta-chinese": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-classification",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "Hello-SimpleAI/HC3-Chinese"
-        ],
-        "license": "",
-        "github": "Hello-SimpleAI/HC3-Chinese",
-        "paper": "",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-classification",
-        "frameworks": [
-            "tensorboard",
-            "transformers",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "financial_phrasebank"
-        ],
-        "license": "",
-        "github": "",
-        "paper": "",
-        "upstream_model": "distilroberta-base",
-        "parameter_count": "",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "finiteautomata/bertweet-base-sentiment-analysis": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text-classification",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "TASS Dataset",
-            "SEMEval 2017 Dataset"
-        ],
-        "license": "",
-        "github": "https://github.com/finiteautomata/pysentimiento/",
-        "paper": "https://arxiv.org/abs/2106.09462",
-        "upstream_model": "BERTweet",
-        "parameter_count": "",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "declare-lab/flan-alpaca-gpt4-xl": "This model's maximum context length is 4097 tokens. However, your messages resulted in 5257 tokens (5100 in the messages, 157 in the functions). Please reduce the length of the messages or functions.",
-    "google/t5-v1_1-large": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text2text-generation",
-        "frameworks": [
-            "transformers",
-            "jax",
-            "pytorch"
-        ],
-        "datasets": [
-            "c4",
-            "Google's T5 Version 1.1"
-        ],
-        "license": "apache-2.0",
-        "github": "https://ai.googleblog.com/2020/02/exploring-transfer-learning-with-t5.html",
-        "paper": "https://arxiv.org/pdf/1910.10683.pdf",
-        "upstream_model": "",
-        "parameter_count": "T5 Version 1.1 was only pre-trained on C4 excluding any supervised training. Therefore, this model has to be fine-tuned before it is useable on a downstream task.",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "Transfer learning, where a model is first pre-trained on a data-rich task before being fine-tuned on a downstream task, has emerged as a powerful technique in natural language processing (NLP). The effectiveness of transfer learning has given rise to a diversity of approaches, methodology, and practice. In this paper, we explore the landscape of transfer learning techniques for NLP by introducing a unified framework that converts every language problem into a text-to-text format. Our systematic study compares pre-training objectives, architectures, unlabeled datasets, transfer approaches, and other factors on dozens of language understanding tasks. By combining the insights from our exploration with scale and our new \u201cColossal Clean Crawled Corpus\u201d, we achieve state-of-the-art results on many benchmarks covering summarization, question answering, text classification, and more.",
-        "demo": "We release our dataset, pre-trained models, and code.",
-        "input_format": "Pretraining Dataset: C4",
-        "output_format": "Pre-training Dataset: C4",
-        "max_sequence_length": "max_sequence_length",
-        "vocabulary_size": ""
-    },
-    "prithivida/parrot_paraphraser_on_T5": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text2text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "Parrot"
-        ],
-        "license": "",
-        "github": "https://github.com/PrithivirajDamodaran/Parrot",
-        "paper": "https://forum.rasa.com/t/paraphrasing-for-nlu-data-augmentation-experimental/27744",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "Salesforce/codet5-base": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text2text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "code_search_net"
-        ],
-        "license": "apache-2.0",
-        "github": "https://huggingface.co/models?search=salesforce/codet",
-        "paper": "@misc{wang2021codet5,\ntitle={CodeT5: Identifier-aware Unified Pre-trained Encoder-Decoder Models for Code Understanding and Generation},\nauthor={Yue Wang and Weishi Wang and Shafiq Joty and Steven C. H. Hoi},\nyear={2021},\neprint={2109.00859},\narchivePrefix={arXiv},\nprimaryClass={cs.CL}\n}",
-        "upstream_model": "CodeT5",
-        "parameter_count": "parameter_count",
-        "hyper_parameters": {},
-        "evaluation": [
-            {
-                "test": "",
-                "result": ""
-            }
-        ],
-        "hardware": "",
-        "limitation_and_bias": "CodeT5 significantly outperforms prior methods on understanding tasks such as code defect detection and clone detection, and generation tasks across various directions including PL-NL, NL-PL, and PL-PL. Further analysis reveals that our model can better capture semantic information from code.",
-        "demo": "Supervised datasets for code can be found [here](https://huggingface.co/datasets?languages=languages:code).\nSee the [model hub](https://huggingface.co/models?search=salesforce/codet) to look for fine-tuned versions on a task that interests you.",
-        "input_format": "This model uses a code-specific BPE (Byte-Pair Encoding) tokenizer trained using the [HuggingFace Tokenizers](https://github.com/huggingface/tokenizers) library.",
-        "output_format": "This model uses a code-specific BPE (Byte-Pair Encoding) tokenizer trained using the [HuggingFace Tokenizers](https://github.com/huggingface/tokenizers) library.",
-        "max_sequence_length": "max_sequence_length",
-        "vocabulary_size": "This model uses a code-specific BPE (Byte-Pair Encoding) tokenizer trained using the [HuggingFace Tokenizers](https://github.com/huggingface/tokenizers) library."
-    },
-    "valhalla/t5-base-e2e-qg": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text2text-generation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "squad"
-        ],
-        "license": "mit",
-        "github": "https://github.com/patil-suraj/question_generation",
-        "paper": "https://arxiv.org/abs/1910.10683",
-        "upstream_model": "valhalla/t5-base-e2e-qg",
-        "parameter_count": "nlp = pipeline('e2e-qg', model='valhalla/t5-base-e2e-qg')",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [
-            {
-                "test": "nlp(text)",
-                "result": "['Who created Python?', 'When was Python first released?', 'What is Python's design philosophy?']"
-            }
-        ],
-        "hardware": "nlp = pipeline('e2e-qg', model='valhalla/t5-base-e2e-qg')",
-        "limitation_and_bias": "#tags\n---\nlicense: mit\ntags:\n- question-generation\ndatasets:\n- squad\nwidget:\n- text: Python is a programming language. It is developed by Guido Van Rossum and\nreleased in 1991. </s>",
-        "demo": "You can play with the model using the inference API, just put the text and see the results!",
-        "input_format": "nlp = pipeline('e2e-qg', model='valhalla/t5-base-e2e-qg')",
-        "output_format": "output_format",
-        "max_sequence_length": "nlp = pipeline('e2e-qg', model='valhalla/t5-base-e2e-qg')",
-        "vocabulary_size": "nlp = pipeline('e2e-qg', model='valhalla/t5-base-e2e-qg')"
-    },
-    "Babelscape/rebel-large": "Could not parse function call data: Unterminated string starting at: line 29 column 30 (char 763)",
     "google/byt5-large": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "text2text-generation",
+        "domain": [
+            "natural-language-processing"
+        ],
+        "model_tasks": [
+            "text2text-generation"
+        ],
         "frameworks": [
-            "transformers",
+            "tf",
             "jax",
             "pytorch"
         ],
+        "libraries": [
+            "transformers"
+        ],
         "datasets": [
-            "mc4"
+            "mC4",
+            "TweetQA"
         ],
         "license": "apache-2.0",
-        "github": "",
-        "paper": "",
-        "upstream_model": "",
+        "github": "https://github.com/google/byt5-large",
+        "paper": "https://arxiv.org/abs/2105.13626",
+        "upstream_model": "Google's T5, MT5, mC4, google/byt5-large, mt5-large, TweetQA, ByT5: Towards a token-free future with pre-trained byte-to-byte models",
         "parameter_count": "",
+        "hardware": "",
         "hyper_parameters": {
             "epochs": "",
             "batch_size": "",
@@ -419,83 +31,33 @@
             "optimizer": ""
         },
         "evaluation": [],
-        "hardware": "",
         "limitation_and_bias": "",
         "demo": "",
         "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "d4data/biomedical-ner-all": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "token-classification",
-        "frameworks": [
-            "transformers",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "https://github.com/dreji18/Bio-Epidemiology-NER",
-            "Maccrobat https://figshare.com/articles/dataset/MACCROBAT2018/9764942",
-            "d4data/biomedical-ner-all"
-        ],
-        "license": "apache-2.0",
-        "github": "https://github.com/dreji18/Bio-Epidemiology-NER",
-        "paper": "The easiest way is to load the inference api from huggingface and second method is through the pipeline object offered by transformers library.\n```python\nfrom transformers import pipeline\nfrom transformers import AutoTokenizer, AutoModelForTokenClassification\n\ntokenizer = AutoTokenizer.from_pretrained('d4data/biomedical-ner-all')\nmodel = AutoModelForTokenClassification.from_pretrained('d4data/biomedical-ner-all')\n\npipe = pipeline('ner', model=model, tokenizer=tokenizer, aggregation_strategy='simple') # pass device=0 if using gpu\npipe('''The patient reported no recurrence of palpitations at follow-up 6 months after the ablation.''')\n```",
-        "upstream_model": "from transformers import AutoTokenizer, AutoModelForTokenClassification\n\ntokenizer = AutoTokenizer.from_pretrained('d4data/biomedical-ner-all')\nmodel = AutoModelForTokenClassification.from_pretrained('d4data/biomedical-ner-all')",
-        "parameter_count": "",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "GPU used : 1 x GeForce RTX 3060 Laptop GPU",
-        "limitation_and_bias": "An English Named Entity Recognition model, trained on Maccrobat to recognize the bio-medical entities (107 entities) from a given text corpus (case reports etc.). This model was built on top of distilbert-base-uncased",
-        "demo": "https://github.com/dreji18/Bio-Epidemiology-NER",
-        "input_format": "input_format",
-        "output_format": "output_format",
-        "max_sequence_length": "max_sequence_length",
-        "vocabulary_size": "vocabulary_size"
-    },
-    "dslim/bert-large-NER": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "token-classification",
-        "frameworks": [
-            "transformers",
-            "jax",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "conll2003"
-        ]
-    },
-    "deepset/tinyroberta-squad2": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "question-answering",
-        "frameworks": [
-            "transformers",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "squad_v2"
-        ]
+        "output_format": ""
     },
     "dccuchile/bert-base-spanish-wwm-uncased": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "fill-mask",
+        "domain": [
+            "natural-language-processing"
+        ],
+        "model_tasks": [
+            "fill-mask"
+        ],
         "frameworks": [
-            "transformers",
+            "tf",
             "jax",
             "pytorch"
         ],
-        "datasets": [
-            "Spanish Pre-Trained BERT Model and Evaluation Data"
+        "libraries": [
+            "transformers"
         ],
+        "datasets": [],
         "license": "CC BY 4.0",
-        "github": "https://github.com/huggingface/transformers",
+        "github": "",
         "paper": "https://users.dcc.uchile.cl/~jperez/papers/pml4dc2020.pdf",
         "upstream_model": "",
-        "parameter_count": "",
+        "parameter_count": "2M",
+        "hardware": "",
         "hyper_parameters": {
             "epochs": "",
             "batch_size": "",
@@ -503,21 +65,25 @@
             "optimizer": ""
         },
         "evaluation": [],
-        "hardware": "",
         "limitation_and_bias": "",
         "demo": "",
         "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
+        "output_format": ""
     },
     "huggingface/CodeBERTa-small-v1": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "fill-mask",
+        "domain": [
+            "natural-language-processing"
+        ],
+        "model_tasks": [
+            "fill-mask"
+        ],
         "frameworks": [
-            "transformers",
+            "tf",
             "jax",
             "pytorch"
+        ],
+        "libraries": [
+            "transformers"
         ],
         "datasets": [
             "code_search_net"
@@ -527,6 +93,7 @@
         "paper": "",
         "upstream_model": "",
         "parameter_count": "",
+        "hardware": "",
         "hyper_parameters": {
             "epochs": "",
             "batch_size": "",
@@ -534,671 +101,51 @@
             "optimizer": ""
         },
         "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "xlm-roberta-base": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "fill-mask",
-        "frameworks": [
-            "transformers",
-            "onnx",
-            "pytorch",
-            "jax",
-            "safetensors"
-        ],
-        "datasets": [
-            "CommonCrawl"
-        ],
-        "license": "mit",
-        "github": "https://github.com/pytorch/fairseq/tree/master/examples/xlmr",
-        "paper": "https://arxiv.org/abs/1911.02116",
-        "upstream_model": "RoBERTa",
-        "parameter_count": "2.5TB",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "microsoft/deberta-base": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "fill-mask",
-        "frameworks": [
-            "transformers",
-            "rust",
-            "pytorch"
-        ],
-        "datasets": [
-            "80GB training data"
-        ],
-        "license": "mit",
-        "github": "https://github.com/microsoft/DeBERTa",
-        "paper": "https://openreview.net/forum?id=XPZIaotutsD",
-        "upstream_model": "DeBERTa",
-        "parameter_count": "N/A",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "DeBERTa",
-        "limitation_and_bias": "DeBERTa improves the BERT and RoBERTa models using disentangled attention and enhanced mask decoder. It outperforms BERT and RoBERTa on majority of NLU tasks with 80GB training data.",
-        "demo": "url={https://openreview.net/forum?id=XPZIaotutsD}",
-        "input_format": "",
-        "output_format": "output_format"
-    },
-    "facebook/mbart-large-50-many-to-many-mmt": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "translation",
-        "frameworks": [
-            "transformers",
-            "rust",
-            "pytorch",
-            "jax",
-            "safetensors"
-        ],
-        "datasets": [
-            "Hindi to French",
-            "Arabic to English"
-        ],
-        "license": "",
-        "github": "https://huggingface.co/facebook/mbart-large-50",
-        "paper": "https://arxiv.org/abs/2008.00401",
-        "upstream_model": "mBART-large-50",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "Helsinki-NLP/opus-mt-it-en": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "translation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "opus"
-        ],
-        "license": "apache-2.0",
-        "github": "#tags\n---\nlicense: apache-2.0\ntags:\n- translation",
-        "paper": "[opus-2019-12-18.zip](https://object.pouta.csc.fi/OPUS-MT-models/it-en/opus-2019-12-18.zip)",
-        "upstream_model": "OPUS readme: [it-en](https://github.com/Helsinki-NLP/OPUS-MT-train/blob/master/models/it-en/README.md)\nmodel: transformer-align\ndownload original weights: [opus-2019-12-18.zip](https://object.pouta.csc.fi/OPUS-MT-models/it-en/opus-2019-12-18.zip)",
-        "parameter_count": "",
-        "hyper_parameters": {},
-        "evaluation": [
-            {
-                "test": "newssyscomb2009.it.en",
-                "result": "35.3"
-            },
-            {
-                "test": "newstest2009.it.en",
-                "result": "34.0"
-            },
-            {
-                "test": "Tatoeba.it.en",
-                "result": "70.9"
-            }
-        ],
-        "hardware": "",
-        "limitation_and_bias": "limitation_and_bias",
-        "demo": "[opus-2019-12-18.zip](https://object.pouta.csc.fi/OPUS-MT-models/it-en/opus-2019-12-18.zip)",
-        "input_format": "input_format",
-        "output_format": "output_format",
-        "max_sequence_length": "max_sequence_length",
-        "vocabulary_size": ""
-    },
-    "facebook/bart-large-cnn": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "summarization",
-        "frameworks": [
-            "jax",
-            "transformers",
-            "rust",
-            "pytorch"
-        ],
-        "datasets": [
-            "cnn_dailymail"
-        ],
-        "license": "mit",
-        "github": "https://github.com/pytorch/fairseq/tree/master/examples/bart",
-        "paper": "https://arxiv.org/abs/1910.13461",
-        "upstream_model": "facebook/bart-large-cnn",
-        "parameter_count": "#params",
-        "hyper_parameters": {},
-        "evaluation": [
-            {
-                "test": "ROUGE-1",
-                "result": "42.9486"
-            },
-            {
-                "test": "ROUGE-2",
-                "result": "20.8149"
-            },
-            {
-                "test": "ROUGE-L",
-                "result": "30.6186"
-            },
-            {
-                "test": "ROUGE-LSUM",
-                "result": "40.0376"
-            }
-        ],
-        "hardware": "",
-        "limitation_and_bias": "BART model pre-trained on English language, and fine-tuned on CNN Daily Mail. It was introduced in the paper BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension by Lewis et al. and first released in this repository (https://github.com/pytorch/fairseq/tree/master/examples/bart).",
-        "demo": "You can use this model for text summarization.",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "PygmalionAI/pygmalion-1.3b": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "conversational",
-        "frameworks": [
-            "tensorboard",
-            "transformers",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "56MB of dialogue data"
-        ],
-        "license": "agpl-3.0",
-        "github": "https://github.com/PygmalionAI/gradio-ui/blob/master/notebooks/GPU.ipynb",
-        "paper": "EleutherAI's pythia-1.3b-deduped",
-        "upstream_model": "EleutherAI/pythia-1.3b-deduped",
-        "parameter_count": "parameter_count",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "on a single 24GB GPU",
-        "limitation_and_bias": "- The model can get stuck repeating certain phrases, or sometimes even entire sentences.\n- We believe this is due to that behavior being present in the training data itself, and plan to investigate and adjust accordingly for future versions.",
-        "demo": "The model can be used as a regular text generation model, but it'll perform best if the input prompt adheres to the following format:\n```\n[CHARACTER]'s Persona: [A few sentences about the character you want the model to play]\n\n[DIALOGUE HISTORY]\nYou: [Your input message here]\n[CHARACTER]:\n```\nWhere `[CHARACTER] `is, as you can probably guess, the name of the character you want the model to portray, and `[DIALOGUE HISTORY]` is chat history so the model can have some conversational context to draw from. Ideally it'll be pairs of messages like:\n```\n[CHARACTER]: [some dialogue here]\nYou: [your response to the dialogue above]\n```\nApart from chat history, you can also just add example conversations in `[DIALOGUE HISTORY]` to show how the character should speak - ideally at the beginning, so it doesn't get confused as to what's conversation history vs. character definition.",
-        "input_format": "The model can be used as a regular text generation model, but it'll perform best if the input prompt adheres to the following format:\n```\n[CHARACTER]'s Persona: [A few sentences about the character you want the model to play]\n\n[DIALOGUE HISTORY]\nYou: [Your input message here]\n[CHARACTER]:\n```\nWhere `[CHARACTER] `is, as you can probably guess, the name of the character you want the model to portray, and `[DIALOGUE HISTORY]` is chat history so the model can have some conversational context to draw from. Ideally it'll be pairs of messages like:\n```\n[CHARACTER]: [some dialogue here]\nYou: [your response to the dialogue above]\n```\nApart from chat history, you can also just add example conversations in `[DIALOGUE HISTORY]` to show how the character should speak - ideally at the beginning, so it doesn't get confused as to what's conversation history vs. character definition.",
-        "output_format": "The model can be used as a regular text generation model, but it'll perform best if the input prompt adheres to the following format:\n```\n[CHARACTER]'s Persona: [A few sentences about the character you want the model to play]\n\n[DIALOGUE HISTORY]\nYou: [Your input message here]\n[CHARACTER]:\n```\nWhere `[CHARACTER] `is, as you can probably guess, the name of the character you want the model to portray, and `[DIALOGUE HISTORY]` is chat history so the model can have some conversational context to draw from. Ideally it'll be pairs of messages like:\n```\n[CHARACTER]: [some dialogue here]\nYou: [your response to the dialogue above]\n```\nApart from chat history, you can also just add example conversations in `[DIALOGUE HISTORY]` to show how the character should speak - ideally at the beginning, so it doesn't get confused as to what's conversation history vs. character definition.",
-        "max_sequence_length": "max_sequence_length",
-        "vocabulary_size": ""
-    },
-    "sentence-transformers/multi-qa-mpnet-base-cos-v1": "This model's maximum context length is 4097 tokens. However, your messages resulted in 4232 tokens (4075 in the messages, 157 in the functions). Please reduce the length of the messages or functions.",
-    "GanjinZero/UMLSBert_ENG": {
-        "model_type": "multimodal",
-        "model_tasks": "feature-extraction",
-        "frameworks": [
-            "transformers",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "https://github.com/GanjinZero/CODER"
-        ],
-        "license": "apache-2.0",
-        "github": "https://github.com/GanjinZero/CODER",
-        "paper": "https://www.sciencedirect.com/science/article/pii/S1532046421003129",
-        "upstream_model": "CODER: Knowledge-infused cross-lingual medical term embedding for term normalization",
-        "parameter_count": "",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "https://github.com/GanjinZero/CODER",
-        "input_format": "input_format",
-        "output_format": "output_format"
-    },
-    "facebook/bart-base": {
-        "model_type": "multimodal",
-        "model_tasks": "feature-extraction",
-        "frameworks": [
-            "transformers",
-            "jax",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [],
-        "license": "apache-2.0",
-        "github": "https://github.com/pytorch/fairseq/tree/master/examples/bart",
-        "paper": "https://arxiv.org/abs/1910.13461",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "BART is particularly effective when fine-tuned for text generation (e.g. summarization, translation) but also works well for comprehension tasks (e.g. text classification, question answering).",
-        "demo": "",
-        "input_format": "",
-        "output_format": ""
-    },
-    "sonoisa/sentence-bert-base-ja-mean-tokens-v2": "Could not parse function call data: Unterminated string starting at: line 9 column 16 (char 500)",
-    "facebook/dpr-question_encoder-single-nq-base": {
-        "model_type": "multimodal",
-        "model_tasks": "feature-extraction",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "Natural Questions (NQ)"
-        ],
-        "license": "cc-by-nc-4.0",
-        "github": "",
-        "paper": "https://arxiv.org/abs/2004.04906",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": ""
-    },
-    "cointegrated/LaBSE-en-ru": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "sentence-similarity",
-        "frameworks": [
-            "transformers",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "LaBSE"
-        ],
-        "license": "https://tfhub.dev/google/LaBSE/1",
-        "github": "https://huggingface.co/sentence-transformers/LaBSE",
-        "paper": "https://arxiv.org/abs/2007.01852",
-        "upstream_model": "https://tfhub.dev/google/LaBSE/1",
-        "parameter_count": "27%",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "max_sequence_length": "",
-        "vocabulary_size": ""
-    },
-    "Linaqruf/anything-v3.0": {
-        "model_type": "multimodal",
-        "model_tasks": "text-to-image",
-        "frameworks": [
-            "diffusers"
-        ],
-        "datasets": [],
-        "license": "creativeml-openrail-m",
-        "github": "",
-        "paper": "",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "output_format"
-    },
-    "DeepFloyd/IF-II-L-v1.0": "401 Client Error. (Request ID: Root=1-6545d811-58a2d6dd22d0af3b5caba9eb)\n\nCannot access gated repo for url https://huggingface.co/api/models/DeepFloyd/IF-II-L-v1.0.\nRepo model DeepFloyd/IF-II-L-v1.0 is gated. You must be authenticated to access it.",
-    "prompthero/openjourney-v4": {
-        "model_type": "multimodal",
-        "model_tasks": "text-to-image",
-        "frameworks": [
-            "diffusers"
-        ],
-        "datasets": [
-            "Lora version",
-            "Openjourney Dreambooth"
-        ],
-        "license": "creativeml-openrail-m",
-        "github": "https://huggingface.co/prompthero/openjourney-lora",
-        "paper": "",
-        "upstream_model": "Lora version",
-        "parameter_count": "Trained on Stable Diffusion v1.5 using +124000 images, 12400 steps, 4 epochs +32 training hours.",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "Document 1:\n\n- [Lora version](https://huggingface.co/prompthero/openjourney-lora)\n- [Openjourney Dreambooth](https://huggingface.co/prompthero/openjourney)",
-        "input_format": "",
-        "output_format": ""
-    },
-    "iZELX1/Anything-V3-X": {
-        "model_type": "multimodal",
-        "model_tasks": "text-to-image",
-        "frameworks": [
-            "diffusers"
-        ],
-        "datasets": [],
-        "license": "creativeml-openrail-m",
-        "github": "",
-        "paper": "",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": ""
-    },
-    "microsoft/trocr-large-printed": {
-        "model_type": "multimodal",
-        "model_tasks": "image-to-text",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "SROIE dataset"
-        ],
-        "license": "",
-        "github": "",
-        "paper": "",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
         "limitation_and_bias": "",
         "demo": "",
         "input_format": "",
         "output_format": ""
     },
     "timm/mobilenetv3_large_100.miil_in21k_ft_in1k": {
-        "model_type": "computer-vision",
-        "model_tasks": "image-classification",
+        "domain": [
+            "computer-vision"
+        ],
+        "model_tasks": [
+            "image-classification"
+        ],
         "frameworks": [
-            "timm",
-            "safetensors",
             "pytorch"
         ],
+        "libraries": [
+            "timm",
+            "safetensors"
+        ],
         "datasets": [
-            "imagenet-1k",
-            "imagenet-21k-p"
+            "ImageNet-21k-P",
+            "ImageNet-1k"
         ],
         "license": "apache-2.0",
-        "github": "@misc{rw2019timm,\nauthor = {Ross Wightman},\ntitle = {PyTorch Image Models},\nyear = {2019},\npublisher = {GitHub},\njournal = {GitHub repository},\ndoi = {10.5281/zenodo.4414861},\nhowpublished = {\\url{https://github.com/huggingface/pytorch-image-models}}\n}",
-        "paper": "@inproceedings{howard2019searching,\ntitle={Searching for mobilenetv3},\nauthor={Howard, Andrew and Sandler, Mark and Chu, Grace and Chen, Liang-Chieh and Chen, Bo and Tan, Mingxing and Wang, Weijun and Zhu, Yukun and Pang, Ruoming and Vasudevan, Vijay and others},\nbooktitle={Proceedings of the IEEE/CVF international conference on computer vision},\npages={1314--1324},\nyear={2019}\n}",
-        "upstream_model": "Pretrain Dataset: ImageNet-21k-P",
-        "parameter_count": "Params (M): 5.5",
-        "hyper_parameters": {},
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "[model results](https://github.com/huggingface/pytorch-image-models/tree/main/results)",
-        "input_format": "input_format",
-        "output_format": "output_format",
-        "input_preprocessing": "- **Pretrain Dataset:** ImageNet-21k-P",
-        "input_size": "Image size: 224 x 224"
-    },
-    "timm/convmixer_768_32.in1k": {
-        "model_type": "computer-vision",
-        "model_tasks": "image-classification",
-        "frameworks": [
-            "timm",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "imagenet-1k"
-        ],
-        "license": "mit",
         "github": "https://github.com/huggingface/pytorch-image-models/tree/main/results",
-        "paper": "@article{Chen2021CrossViTCM,\ntitle={CrossViT: Cross-Attention Multi-Scale Vision Transformer for Image Classification},\nauthor={Chun-Fu Chen and Quanfu Fan and Rameswar Panda},\njournal={2021 IEEE/CVF International Conference on Computer Vision (ICCV)},\nyear={2021},\npages={347-356}\n}",
-        "upstream_model": "https://github.com/locuslab/convmixer",
-        "parameter_count": "21.1",
+        "paper": "https://github.com/huggingface/pytorch-image-models",
+        "upstream_model": "MobileNet-v3, ImageNet-21k-P, ImageNet-1k, Alibaba MIIL",
+        "parameter_count": "5.5",
+        "hardware": "MobileNet-v3 image classification model, ImageNet-21k-P, ImageNet-1k, Alibaba MIIL",
         "hyper_parameters": {
             "epochs": "",
             "batch_size": "",
             "learning_rate": "",
             "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "Model Type: Image classification / feature backbone\nModel Stats:\nParams (M): 21.1\nGMACs: 19.5\nActivations (M): 26.0\nImage size: 224 x 224\nDataset: ImageNet-1k\nOriginal: https://github.com/locuslab/convmixer",
-        "demo": "https://github.com/huggingface/pytorch-image-models/tree/main/results",
-        "input_format": "",
-        "output_format": "output_format",
-        "input_preprocessing": "",
-        "input_size": "Image size: 224 x 224"
-    },
-    "timm/efficientnet_b0.ra_in1k": {
-        "model_type": "computer-vision",
-        "model_tasks": "image-classification",
-        "frameworks": [
-            "timm",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "imagenet-1k"
-        ],
-        "license": "apache-2.0",
-        "github": "https://github.com/huggingface/pytorch-image-models",
-        "paper": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks: https://arxiv.org/abs/1905.11946",
-        "upstream_model": "EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks: https://arxiv.org/abs/1905.11946",
-        "parameter_count": "5.3",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "Trained on ImageNet-1k",
-        "limitation_and_bias": "- **Model Type:** Image classification / feature backbone\n- **Model Stats:**\n- Params (M): 5.3\n- GMACs: 0.4\n- Activations (M): 6.7\n- Image size: 224 x 224\n- **Papers:**\n- EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks: https://arxiv.org/abs/1905.11946\n- ResNet strikes back: An improved training procedure in timm: https://arxiv.org/abs/2110.00476\n- **Dataset:** ImageNet-1k\n- **Original:** https://github.com/huggingface/pytorch-image-models",
-        "demo": "[model results](https://github.com/huggingface/pytorch-image-models/tree/main/results)",
-        "input_format": "- **Dataset:** ImageNet-1k",
-        "output_format": "output_format",
-        "input_preprocessing": "",
-        "input_size": "Image size: 224 x 224"
-    },
-    "timm/convnext_base.fb_in22k_ft_in1k": "This model's maximum context length is 4097 tokens. However, your messages resulted in 4239 tokens. Please reduce the length of the messages.",
-    "timm/resnet50.a1_in1k": "This model's maximum context length is 4097 tokens. However, your messages resulted in 15822 tokens. Please reduce the length of the messages.",
-    "TahaDouaji/detr-doc-table-detection": {
-        "model_type": "computer-vision",
-        "model_tasks": "object-detection",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [
-            "ICDAR2019 Table Dataset"
-        ],
-        "github": "https://arxiv.org/abs/2005.12872",
-        "limitation_and_bias": "Users (both direct and downstream) should be made aware of the risks, biases and limitations of the model.",
-        "input_preprocessing": "Significant research has explored bias and fairness issues with language models (see, e.g., [Sheng et al. (2021)](https://aclanthology.org/2021.acl-long.330.pdf) and [Bender et al. (2021)](https://dl.acm.org/doi/pdf/10.1145/3442188.3445922)).",
-        "input_size": "inputs = processor(images=image, return_tensors='pt')"
-    },
-    "CIDAS/clipseg-rd64-refined": {
-        "model_type": "computer-vision",
-        "model_tasks": "image-segmentation",
-        "frameworks": [
-            "transformers",
-            "pytorch"
-        ],
-        "datasets": [],
-        "license": "",
-        "github": "",
-        "paper": "",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "input_preprocessing": "",
-        "input_size": ""
-    },
-    "DionTimmer/controlnet_qrcode-control_v1p_sd15": {
-        "model_type": "computer-vision",
-        "model_tasks": "image-to-image",
-        "frameworks": [
-            "diffusers"
-        ],
-        "datasets": [
-            "same dataset"
-        ],
-        "license": "openrail++",
-        "github": "https://github.com/Mikubill/sd-webui-controlnet",
-        "paper": "",
-        "upstream_model": "image-to-image",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "hardware": "",
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": "",
-        "input_preprocessing": "",
-        "input_size": ""
-    },
-    "MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli": {
-        "model_type": "natural-language-processing",
-        "model_tasks": "zero-shot-classification",
-        "frameworks": [
-            "transformers",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "MultiNLI",
-            "Fever-NLI",
-            "ANLI",
-            "LingNLI",
-            "WANLI"
-        ],
-        "license": "mit",
-        "github": "https://github.com/alisawuffles/WANLI",
-        "paper": "https://arxiv.org/abs/2111.09543",
-        "upstream_model": "microsoft/deberta-v3-large",
-        "parameter_count": "",
-        "hyper_parameters": {
-            "epochs": "4",
-            "batch_size": "16",
-            "learning_rate": "5e-06",
-            "optimizer": "",
-            "warmup_ratio": "0.06",
-            "weight_decay": "0.01",
-            "fp16": "True"
         },
         "evaluation": [
             {
-                "test": "mnli_test_m",
-                "result": "0.912"
-            },
-            {
-                "test": "mnli_test_mm",
-                "result": "0.908"
-            },
-            {
-                "test": "anli_test",
-                "result": "0.702"
-            },
-            {
-                "test": "anli_test_r3",
-                "result": "0.64"
-            },
-            {
-                "test": "ling_test",
-                "result": "0.87"
-            },
-            {
-                "test": "wanli_test",
-                "result": "0.77"
+                "test": "",
+                "dataset": "",
+                "result": ""
             }
         ],
-        "hardware": "",
-        "limitation_and_bias": "Please consult the original DeBERTa-v3 paper and literature on different NLI datasets for more information on the training data and potential biases. The model will reproduce statistical patterns in the training data.",
-        "demo": "older versions of HF Transformers seem to have issues running the model (e.g. resulting in an issue with the tokenizer). Using Transformers>=4.13 might solve some issues.",
-        "input_format": "input_format",
-        "output_format": "output_format",
-        "max_sequence_length": "max_sequence_length",
-        "vocabulary_size": "vocabulary_size"
-    },
-    "openai/whisper-base": {
-        "model_type": "audio",
-        "model_tasks": "automatic-speech-recognition",
-        "frameworks": [
-            "transformers",
-            "jax",
-            "safetensors",
-            "pytorch"
-        ],
-        "datasets": [
-            "LibriSpeech (clean)",
-            "LibriSpeech (other)",
-            "Common Voice 11.0"
-        ],
-        "license": "apache-2.0",
-        "github": "https://github.com/openai/whisper",
-        "paper": "https://arxiv.org/abs/2212.04356",
-        "upstream_model": "None",
-        "parameter_count": "1550 M",
-        "hyper_parameters": {
-            "epochs": "None",
-            "batch_size": "None",
-            "learning_rate": "None",
-            "optimizer": "None"
-        },
-        "evaluation": [
-            {
-                "test": "ASR",
-                "result": "strong results in ~10 languages"
-            }
-        ],
-        "hardware": "None",
-        "limitation_and_bias": "The models are trained in a weakly supervised manner using large-scale noisy data, which may result in hallucinations. The models perform unevenly across languages and exhibit lower accuracy on low-resource and/or low-discoverability languages. They also show disparate performance on different accents and dialects, including higher word error rate across speakers of different demographics. The sequence-to-sequence architecture of the model can generate repetitive texts. Further analysis on these limitations can be found in the accompanying paper.",
-        "demo": "The blog post [Fine-Tune Whisper with \ud83e\udd17 Transformers](https://huggingface.co/blog/fine-tune-whisper) provides a step-by-step guide to fine-tuning the Whisper model with as little as 5 hours of labelled data.",
-        "input_format": "None",
-        "output_format": "None",
-        "sample_rate": "None"
+        "limitation_and_bias": "",
+        "demo": "",
+        "input_format": "",
+        "output_format": ""
     }
 }
