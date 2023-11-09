@@ -15,7 +15,7 @@ import time
 import json
 import argparse
 import asyncio
-import sys
+import sys  
 import os
 
 from utils import hf_utils
@@ -47,12 +47,6 @@ with open("log.txt", 'w') as the_log:
     the_log.write("")
     the_log.close()
 
-def get_data_schema() -> dict:
-
-    simple_metadata_schema = {"simple":{"properties": {**schema["simple_metadata"]}}}
-    complex_metadata_schema = {"complex":{"properties": {**schema["complex_metadata"]}}}
-    return {**simple_metadata_schema, **complex_metadata_schema}
-
 def pretty_print_docs(docs, metadata):
     return f"{'-' * 20} {metadata} {'-' * 20}\n\n" + f"\n{'-' * 30}\n".join([f"Document {i+1}:\n\n" + d.page_content for i, d in enumerate(docs)]) + "\n\n"
 
@@ -76,7 +70,7 @@ def log_list(content: str):
 
 log("Metadata Prompt: \n\n")
 log(prompt.METADATA_PROMPT)
-log("\nExtraction Prompts: \n\n" + str(prompt.SIMPLE_METADATA_EXTRACTION_PROMPT) + str(prompt.COMPLEX_METADATA_EXTRACTION_PROMPT) + "\n")
+log("\nExtraction Prompts: \n\n" + prompt.PREFIX_PROMPT)
 
 if args.data == "input":
     models_iterable = data
@@ -90,20 +84,8 @@ if args.data == "filtered":
 start_time = time.time()
 final_result = {}
 
-extraction_prompt = {
-    "simple": ChatPromptTemplate.from_messages(
-        [
-            SystemMessage(content = (prompt.SIMPLE_METADATA_EXTRACTION_PROMPT)),
-            HumanMessagePromptTemplate.from_template("{documents}"),
-        ]
-    ),
-    "complex": ChatPromptTemplate.from_messages(
-        [
-            SystemMessage(content = (prompt.COMPLEX_METADATA_EXTRACTION_PROMPT)),
-            HumanMessagePromptTemplate.from_template("{documents}"),
-        ]
-    ),
-}      
+
+
 
 #change between filtered_models and input_models
 for model in models_iterable:
@@ -115,7 +97,6 @@ for model in models_iterable:
     model_result["domain"], model_result["model_tasks"] = hf_utils.get_domain_and_task(model)
     model_result["frameworks"]= hf_utils.get_frameworks(model)
     model_result["libraries"]= hf_utils.get_libraries(model)
-    data_schema = get_data_schema()
 
     headers_to_split_on = [("#", "header 1"), ("##", "header 2"), ("###", "header 3")]
     markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on = headers_to_split_on)
@@ -127,36 +108,39 @@ for model in models_iterable:
     chatbot = ChatOpenAI(temperature = 0.1, model = "gpt-3.5-turbo")
 
 
-    for key in data_schema.keys():
-        compressed_docs = ""
-        for metadata in data_schema[key]["properties"]:
-            retriever = vector_store.as_retriever(search_kwargs = {"k": 3})
-            retriever_prompt = prompt.METADATA_PROMPT[metadata]
-            
-            docs = retriever.get_relevant_documents(retriever_prompt)
-            compressed_docs += pretty_print_docs(docs, metadata)
-            log(pretty_print_docs(docs, metadata))
-            
-            # compressor = LLMChainExtractor.from_llm(llm)
-            # compression_retriever = ContextualCompressionRetriever(base_compressor = compressor, base_retriever = retriever)
-            # single_compressed_docs = compression_retriever.get_relevant_documents(retriever_prompt + f" Keep surrounding context in compressed document. ")
-            # compressed_docs += pretty_print_docs(single_compressed_docs, metadata)
-            # log(pretty_print_docs(single_compressed_docs, "compressed " + metadata))   
-             
-        chain = create_extraction_chain(schema = data_schema[key], llm = chatbot, prompt = extraction_prompt[key])
+    for metadata in schema["extract_metadata"].keys():
+        docs = ""
+        retriever = vector_store.as_retriever(search_type = "similarity_score_threshold", search_kwargs = {"k": 3, "score_threshold":0.6})
+        metadata_prompt = prompt.METADATA_PROMPT[metadata]
+        data_schema = {"properties" : {metadata : {**schema["extract_metadata"][metadata]}}}
+        example = prompt.FEW_SHOT_EXAMPLES[metadata]
+
+        doc = retriever.get_relevant_documents(metadata_prompt)
+        docs += pretty_print_docs(doc, metadata)
+        log(pretty_print_docs(doc, metadata))
+
+        extraction_prompt = ChatPromptTemplate.from_messages(
+            [
+                SystemMessage(content = (prompt.PREFIX_PROMPT)),
+                HumanMessagePromptTemplate.from_template("{documents}"),
+            ]
+        )
+
+        chain = create_extraction_chain(schema = data_schema, llm = chatbot, prompt = extraction_prompt)
         extraction_result = chain.run({
             "domain": model_result["domain"],
             "model": model,
-            "documents": compressed_docs
+            "documents": docs,
+            "question": metadata_prompt
             })
-    
+
         if type(extraction_result) == list:
             model_result = {**model_result,**extraction_result[0]}
         if type(extraction_result) == dict:
             model_result = {**model_result,**extraction_result}
 
     
-    print(model_result)
+    #print(model_result)
     log_list("\n" + str(model_result))
     final_result[model] = model_result
 

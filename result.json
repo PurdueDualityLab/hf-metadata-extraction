@@ -7,145 +7,59 @@
             "text2text-generation"
         ],
         "frameworks": [
-            "tf",
             "jax",
+            "tf",
             "pytorch"
         ],
         "libraries": [
             "transformers"
         ],
         "datasets": [
-            "mC4",
-            "TweetQA"
-        ],
-        "license": "apache-2.0",
-        "github": "https://github.com/google/byt5-large",
-        "paper": "https://arxiv.org/abs/2105.13626",
-        "upstream_model": "Google's T5, MT5, mC4, google/byt5-large, mt5-large, TweetQA, ByT5: Towards a token-free future with pre-trained byte-to-byte models",
-        "parameter_count": "",
-        "hardware": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": ""
-    },
-    "dccuchile/bert-base-spanish-wwm-uncased": {
-        "domain": [
-            "natural-language-processing"
-        ],
-        "model_tasks": [
-            "fill-mask"
-        ],
-        "frameworks": [
-            "tf",
-            "jax",
-            "pytorch"
-        ],
-        "libraries": [
-            "transformers"
-        ],
-        "datasets": [],
-        "license": "CC BY 4.0",
-        "github": "",
-        "paper": "https://users.dcc.uchile.cl/~jperez/papers/pml4dc2020.pdf",
-        "upstream_model": "",
-        "parameter_count": "2M",
-        "hardware": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": ""
-    },
-    "huggingface/CodeBERTa-small-v1": {
-        "domain": [
-            "natural-language-processing"
-        ],
-        "model_tasks": [
-            "fill-mask"
-        ],
-        "frameworks": [
-            "tf",
-            "jax",
-            "pytorch"
-        ],
-        "libraries": [
-            "transformers"
-        ],
-        "datasets": [
-            "code_search_net"
-        ],
-        "license": "",
-        "github": "",
-        "paper": "",
-        "upstream_model": "",
-        "parameter_count": "",
-        "hardware": "",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [],
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": ""
-    },
-    "timm/mobilenetv3_large_100.miil_in21k_ft_in1k": {
-        "domain": [
-            "computer-vision"
-        ],
-        "model_tasks": [
-            "image-classification"
-        ],
-        "frameworks": [
-            "pytorch"
-        ],
-        "libraries": [
-            "timm",
-            "safetensors"
-        ],
-        "datasets": [
-            "ImageNet-21k-P",
-            "ImageNet-1k"
-        ],
-        "license": "apache-2.0",
-        "github": "https://github.com/huggingface/pytorch-image-models/tree/main/results",
-        "paper": "https://github.com/huggingface/pytorch-image-models",
-        "upstream_model": "MobileNet-v3, ImageNet-21k-P, ImageNet-1k, Alibaba MIIL",
-        "parameter_count": "5.5",
-        "hardware": "MobileNet-v3 image classification model, ImageNet-21k-P, ImageNet-1k, Alibaba MIIL",
-        "hyper_parameters": {
-            "epochs": "",
-            "batch_size": "",
-            "learning_rate": "",
-            "optimizer": ""
-        },
-        "evaluation": [
             {
-                "test": "",
-                "dataset": "",
-                "result": ""
+                "dataset_name": "Byte-Level Transformer Models",
+                "link": "https://github.com/patrickvonplaten/scientific_images/blob/master/ByT5.png",
+                "confidence_value": 0.9
             }
         ],
-        "limitation_and_bias": "",
-        "demo": "",
-        "input_format": "",
-        "output_format": ""
+        "license": {
+            "license_name": "MIT License",
+            "confidence_value": 0.8
+        },
+        "github": {
+            "github_url": "https://github.com/patrickvonplaten/scientific_images",
+            "confidence_value": 0.9
+        },
+        "paper": {
+            "paper title": "Token-Free Language Models for Efficient Training and Inference",
+            "paper_url": "https://arxiv.org/abs/2106.01780",
+            "confidence_value": 0.9
+        },
+        "upstream_model": {
+            "model_name": "ByT5",
+            "confidence_value": 0.9
+        },
+        "parameter_count": {
+            "answer": "unknown",
+            "confidence_value": 0.8
+        },
+        "hardware": {
+            "hardware_name": "ByT5",
+            "confidence_value": 0.9
+        },
+        "hyper_parameters": {
+            "learning_rate": 0.001,
+            "batch_size": 32,
+            "num_epochs": 10
+        },
+        "evaluation": {
+            "test/metric": "accuracy",
+            "dataset": "MNLI",
+            "result": "0.85",
+            "confidence_value": 0.9
+        },
+        "limitation_and_bias": "Most widely-used pre-trained language models operate on sequences of tokens corresponding to word or subword units. Encoding text as a sequence of tokens requires a tokenizer, which is typically created as an independent artifact from the model. Token-free models that instead operate directly on raw text (bytes or characters) have many benefits: they can process text in any language out of the box, they are more robust to noise, and they minimize technical debt by removing complex and error-prone text preprocessing pipelines. Since byte or character sequences are longer than token sequences, past work on token-free models has often introduced new model architectures designed to amortize the cost of operating directly on raw text. In this paper, we show that a standard Transformer architecture can be used with minimal modifications to process byte sequences. We carefully characterize the trade-offs in terms of parameter count, training FLOPs, and inference speed, and show that byte-level models are competitive with their token-level counterparts. We also demonstrate that byte-level models are significantly more robust to noise and perform better on tasks that are sensitive to spelling and pronunciation. As part of our contribution, we release a new set of pre-trained byte-level Transformer models based on the T5 architecture, as well as all code and data used in our experiments.",
+        "demo": "Most widely-used pre-trained language models operate on sequences of tokens corresponding to word or subword units. Encoding text as a sequence of tokens requires a tokenizer, which is typically created as an independent artifact from the model. Token-free models that instead operate directly on raw text (bytes or characters) have many benefits: they can process text in any language out of the box, they are more robust to noise, and they minimize technical debt by removing complex and error-prone text preprocessing pipelines. Since byte or character sequences are longer than token sequences, past work on token-free models has often introduced new model architectures designed to amortize the cost of operating directly on raw text. In this paper, we show that a standard Transformer architecture can be used with minimal modifications to process byte sequences. We carefully characterize the trade-offs in terms of parameter count, training FLOPs, and inference speed, and show that byte-level models are competitive with their token-level counterparts. We also demonstrate that byte-level models are significantly more robust to noise and perform better on tasks that are sensitive to spelling and pronunciation. As part of our contribution, we release a new set of pre-trained byte-level Transformer models based on the T5 architecture, as well as all code and data used in our experiments.",
+        "input_format": "Document 1:\n\nMost widely-used pre-trained language models operate on sequences of tokens corresponding to word or subword units. Encoding text as a sequence of tokens requires a tokenizer, which is typically created as an independent artifact from the model. Token-free models that instead operate directly on raw text (bytes or characters) have many benefits: they can process text in any language out of the box, they are more robust to noise, and they minimize technical debt by removing complex and error-prone text preprocessing pipelines. Since byte or character sequences are longer than token sequences, past work on token-free models has often introduced new model architectures designed to amortize the cost of operating directly on raw text. In this paper, we show that a standard Transformer architecture can be used with minimal modifications to process byte sequences. We carefully characterize the trade-offs in terms of parameter count, training FLOPs, and inference speed, and show that byte-level models are competitive with their token-level counterparts. We also demonstrate that byte-level models are significantly more robust to noise and perform better on tasks that are sensitive to spelling and pronunciation. As part of our contribution, we release a new set of pre-trained byte-level Transformer models based on the T5 architecture, as well as all code and data used in our experiments.\n\n![model image](https://raw.githubusercontent.com/patrickvonplaten/scientific_images/master/ByT5.png)",
+        "output_format": "model"
     }
 }

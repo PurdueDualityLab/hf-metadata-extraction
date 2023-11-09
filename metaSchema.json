@@ -17,53 +17,101 @@
       "items": {"type": "string"}
     }
   },
-  "simple_metadata": {
+  "extract_metadata": {
     "datasets": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties":{
+          "dataset_name": {"type":"string"},
+          "link": {"type": "string"},
+          "confidence_value": {"type": "number"}
+        }
       }
     },
-    "license": {"type": "string"},
+    "license": {
+      "type":"object",
+      "properties":{
+        "license_name": {"type":"string"},
+        "confidence_value": {"type": "number"}
+      }
+    },
     "github": {
-      "type": "string", 
-      "format": "uri"
+      "type": "object",
+      "properties":{
+        "github_url": {"type": "string"},
+        "confidence_value": {"type": "number"}
+      }
     },
     "paper": {
-      "type": "string", 
-      "format": "uri"
-    },
-    "upstream_model": {
-      "type": "string"
-    },
-    "parameter_count": {
-      "type": "string",
-      "pattern": "^(|[0-9]+[MBT])$"
-    },
-    "hardware": {"type":"string"}
-  },
-  "complex_metadata":{
-    "hyper_parameters": {
-      "type": "object",
-      "properties": {
-        "epochs": {"type":"string"},
-        "batch_size": {"type":"string"},
-        "learning_rate": {"type":"string"},
-        "optimizer": {"type": "string"}
-      },
-      "additionalProperties": true
-    },
-    "evaluation": {
       "type": "array",
       "items": {
         "type": "object",
-        "properties": {
-          "test": {"type": "string"},
-          "dataset": {"type": "string"},
-          "result":{"type": "string"}
-        },
-      "required": ["test", "results"]
+        "properties":{
+          "paper title": {"type": "string"},
+          "paper_url": {"type": "string"},
+          "confidence_value": {"type": "number"}
+        }
       }
+    },
+    "upstream_model": {
+      "type": "object",
+      "properties":{
+        "model_name": {"type": "string"},
+        "confidence_value": {"type": "number"}
+      }
+    },
+    "parameter_count": {
+      "type": "object",
+      "properties":{
+        "answer": {
+          "type": "string",
+          "pattern": "^(|[0-9]+[MBT])$"
+        },
+        "confidence_value": {"type": "number"}
+      }
+    },
+    "hardware": {
+      "type": "object",
+      "properties":{
+        "hardware_name": {"type": "string"},
+        "confidence_value": {"type": "number"}
+      }
+    },
+    "hyper_parameters": {
+      "items":{
+        "type": "object",
+        "properties": {
+          "hyper_parameter": {"type":"string"},
+          "value": {"type":"string"},
+          "confidence_value": {"type": "number"}
+        },
+        "required":["hyper_parameter", "value", "confidence_value"]
+      }
+    },
+    "evaluation": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "test/metric": {"type": "string"},
+              "dataset": {"type": "string"},
+              "result": {"type": "string"},
+              "confidence_value": {"type": "number"}
+            },
+            "required": ["test", "result"]
+          }
+        },
+        {
+          "type": "object",
+          "properties":{
+            "link": {"type": "string"},
+            "confidence_value": {"type": "number"}
+          }
+        }
+      ] 
     },
     "limitation_and_bias": {"type":"string"},
     "demo": {"type":"string"},
