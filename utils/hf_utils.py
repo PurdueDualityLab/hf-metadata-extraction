@@ -9,7 +9,9 @@ def load_card(model_name: str) -> str:
         #card.data = tags
         #card.text card
         #cald.content tags+cards
-    return ("#tags\n\n" + card.content)
+    card = "#tags\n\n" + card.content
+    card = card.replace('"', "'")
+    return (card)
     
 def get_domain_and_task(model_name: str) -> (list,list):
     model_info = huggingface_hub.hf_api.model_info(model_name)

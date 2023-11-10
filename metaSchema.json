@@ -24,33 +24,19 @@
         "type": "object",
         "properties":{
           "dataset_name": {"type":"string"},
-          "link": {"type": "string"},
-          "confidence_value": {"type": "number"}
+          "url": {"type": "string"}
         }
       }
     },
-    "license": {
-      "type":"object",
-      "properties":{
-        "license_name": {"type":"string"},
-        "confidence_value": {"type": "number"}
-      }
-    },
-    "github": {
-      "type": "object",
-      "properties":{
-        "github_url": {"type": "string"},
-        "confidence_value": {"type": "number"}
-      }
-    },
+    "license": {"type":"string"},
+    "github_repo": {"type": "string"},
     "paper": {
       "type": "array",
       "items": {
         "type": "object",
         "properties":{
           "paper title": {"type": "string"},
-          "paper_url": {"type": "string"},
-          "confidence_value": {"type": "number"}
+          "paper_url": {"type": "string"}
         }
       }
     },
@@ -58,18 +44,12 @@
       "type": "object",
       "properties":{
         "model_name": {"type": "string"},
-        "confidence_value": {"type": "number"}
+        "url": {"type": "string"}
       }
     },
     "parameter_count": {
-      "type": "object",
-      "properties":{
-        "answer": {
           "type": "string",
           "pattern": "^(|[0-9]+[MBT])$"
-        },
-        "confidence_value": {"type": "number"}
-      }
     },
     "hardware": {
       "type": "object",
@@ -89,10 +69,9 @@
         "type": "object",
         "properties": {
           "hyper_parameter": {"type":"string"},
-          "value": {"type":"string"},
-          "confidence_value": {"type": "number"}
+          "value": {"type":"string"}
         },
-        "required":["hyper_parameter", "value", "confidence_value"]
+        "required":["hyper_parameter", "value"]
       }
     },
     "evaluation": {

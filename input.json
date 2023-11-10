@@ -1,3 +1,4 @@
 [
-    "google/byt5-large"
+    "google/byt5-large",
+    "deepset/tinyroberta-squad2"
 ]

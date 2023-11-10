@@ -1,21 +1,10 @@
-import openai
-from collections import Counter
-from langchain.text_splitter import MarkdownHeaderTextSplitter
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.llms import OpenAI
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import LLMChainExtractor
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import create_extraction_chain
 from langchain.prompts import ChatPromptTemplate
-from langchain.prompts.chat import SystemMessage, HumanMessagePromptTemplate
+from langchain.prompts.chat import SystemMessage, HumanMessage
 import time
 import json
 import argparse
-import asyncio
-import sys  
 import os
 
 from utils import hf_utils
@@ -24,22 +13,6 @@ import prompt
 
 os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 
-parser = argparse.ArgumentParser(description="Python Script with Different Modes")
-parser.add_argument("--data", choices = ["input", "filtered"], required= True, help = "Select to run through input data set or filtered model set")
-parser.add_argument("--start", type = int, help= "Select which model index to start from in filtered_models.json file")
-parser.add_argument("--range", type = int, help= "Select number of models to run through")
-args = parser.parse_args()
-
-if args.data == "input":
-    with open("input.json", 'r') as json_file:
-        data = json.load(json_file)
-
-if args.data == "filtered":
-    if args.start is None or args.range is None:
-        parser.error("for filtered data, starting index and range required.")
-    with open("filtered_models.json", 'r') as json_file:
-        data = json.load(json_file)
-
 with open("metaSchema.json", 'r') as json_file:
     schema = json.load(json_file)
 
@@ -47,8 +20,30 @@ with open("log.txt", 'w') as the_log:
     the_log.write("")
     the_log.close()
 
-def pretty_print_docs(docs, metadata):
-    return f"{'-' * 20} {metadata} {'-' * 20}\n\n" + f"\n{'-' * 30}\n".join([f"Document {i+1}:\n\n" + d.page_content for i, d in enumerate(docs)]) + "\n\n"
+parser = argparse.ArgumentParser(description="Python Script with Different Modes")
+parser.add_argument("--data", choices = ["input", "filtered"], required= True, help = "Select to run through input data set or filtered model set")
+parser.add_argument("--start", type = int, help= "Select which model index to start from in filtered_models.json file")
+parser.add_argument("--range", type = int, help= "Select number of models to run through")
+args = parser.parse_args()
+
+# load in models
+if args.data == "input":
+    with open("input.json", 'r') as json_file:
+        data = json.load(json_file)
+    models_iterable = data
+elif args.data == "filtered":
+    
+    # make sure they input start and range
+    if args.start is None or args.range is None:
+        parser.error("for filtered data, starting index and range required.")
+    with open("2k_filtered_models.json", 'r') as json_file:
+        data = json.load(json_file)
+
+    # get correct models to iterate through wth start and range
+    data = list(data.keys())
+    start_index = args.start
+    end_index = start_index + args.range
+    models_iterable = data[start_index: end_index]
 
 def log(text: str):
     with open("log.txt", 'a') as the_log:
@@ -59,106 +54,67 @@ def log(text: str):
                 the_log.write(f"{key}: {value}\n")
         the_log.close()
 
-def log_list(content: str):
-    line_width = 100
-    lines = [content[i:i+line_width] for i in range(0, len(content), line_width)]
-    with open("log.txt", "a") as file:
-        for line in lines:
-            file.write(f"{line.ljust(line_width)} \n")
-        file.close()
-    
-
-log("Metadata Prompt: \n\n")
-log(prompt.METADATA_PROMPT)
-log("\nExtraction Prompts: \n\n" + prompt.PREFIX_PROMPT)
-
-if args.data == "input":
-    models_iterable = data
-
-if args.data == "filtered":
-    data = data.keys()
-    start_index = args.start
-    end_index = start_index + args.range
-    models_iterable = data[start_index: end_index]
-
 start_time = time.time()
 final_result = {}
 
+log(prompt.PREFIX_PROMPT + "\n")
+log(prompt.LANG_PROMPT)
+log(prompt.METADATA_PROMPT  + "\n")
 
 
-
-#change between filtered_models and input_models
-for model in models_iterable:
+for index, model in enumerate(models_iterable):
     model_result = {}
-    # try:
-    card = hf_utils.load_card(model)
-    card = card.replace('"', "'")
-    log(f"\n#####################{model}########################\n\n")
-    model_result["domain"], model_result["model_tasks"] = hf_utils.get_domain_and_task(model)
-    model_result["frameworks"]= hf_utils.get_frameworks(model)
-    model_result["libraries"]= hf_utils.get_libraries(model)
-
-    headers_to_split_on = [("#", "header 1"), ("##", "header 2"), ("###", "header 3")]
-    markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on = headers_to_split_on)
-    md_header_splits = markdown_splitter.split_text(card)
-    #print(md_header_splits)
-
-    vector_store = FAISS.from_documents(md_header_splits, OpenAIEmbeddings(allowed_special={'<|endoftext|>', '<|prompter|>', '<|assistant|>'}))
-    llm = OpenAI(temperature = 0)
-    chatbot = ChatOpenAI(temperature = 0.1, model = "gpt-4-1106-preview")
+    try:
+        card = hf_utils.load_card(model)
+        model_result["domain"], model_result["model_tasks"] = hf_utils.get_domain_and_task(model)
+        model_result["frameworks"]= hf_utils.get_frameworks(model)
+        model_result["libraries"]= hf_utils.get_libraries(model)
 
 
-    for metadata in schema["extract_metadata"].keys():
-        docs = ""
-        retriever = vector_store.as_retriever(search_type = "similarity_score_threshold", search_kwargs = {"k": 3, "score_threshold":0.7})
-        metadata_prompt = prompt.METADATA_PROMPT[metadata]
-        data_schema = {"properties" : {metadata : {**schema["extract_metadata"][metadata]}}}
-
-        doc = retriever.get_relevant_documents(metadata_prompt)
-        docs += pretty_print_docs(doc, metadata)
-        log(pretty_print_docs(doc, metadata))
-
+        # checks need to add language as metadata for NLPs
+        is_nlp = "natural-language-processing" in model_result["domain"]
+        if is_nlp:
+            lang_schema = {"language": {"items": {"type": "string"}}}
+            data_schema = {"properties": {**lang_schema , **schema["extract_metadata"]}}
+        else:
+            data_schema = {"properties": schema["extract_metadata"]}
+        
+        # set chatbot as gpt-4-turbo
+        chatbot = ChatOpenAI(temperature = 0.1, model = "gpt-4-1106-preview")
+        
+        # extraction chat prompt, system msg being rules, first human prompt being model card, and result will be first assistant response
         extraction_prompt = ChatPromptTemplate.from_messages(
             [
-                SystemMessage(content = (prompt.PREFIX_PROMPT)),
-                HumanMessagePromptTemplate.from_template("{documents}"),
+                #f-string to add metadata prompt for language prompt
+                SystemMessage(content = f"{prompt.PREFIX_PROMPT}\n{prompt.LANG_PROMPT if is_nlp else ''}{prompt.METADATA_PROMPT}"),
+                HumanMessage(content = card)
             ]
         )
 
+        # putting schema, llm, and prompt together
         chain = create_extraction_chain(schema = data_schema, llm = chatbot, prompt = extraction_prompt)
+
+        # running the chain, args are to fill in f-string in extraction_prompt
         extraction_result = chain.run({
             "domain": model_result["domain"],
-            "model": model,
-            "metadata": metadata,
-            "question": metadata_prompt,
-            "documents": docs
+            "model": model
             })
 
+        # normally outputs as dict in list [{...}] but sometimes outputs as list {...}, this is a way to catch both
+        # and combine it with pre-processed metadata
         if type(extraction_result) == list:
             model_result = {**model_result,**extraction_result[0]}
         if type(extraction_result) == dict:
             model_result = {**model_result,**extraction_result}
 
-    
-    #print(model_result)
-    log_list("\n" + str(model_result))
-    final_result[model] = model_result
+        final_result[model] = model_result
 
-    #exceed token limit of 4096
-    # except Exception as e:
-
-    #     log(f"\nERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n {str(e)} \n")
-    #     final_result[model] = str(e)
+    except Exception as e:
+        final_result[model] = str(e)
+        log(model + ": " + str(e) + "\n")
         
-
-    #For eval purposes
     with open("result.json", "w") as json_file:
         json.dump(final_result, json_file, indent = 4)
-
-
-# file_path = "result.json"
-# with open(file_path, "w") as json_file:
-#     json.dump(result, json_file, indent = 4)
 
 end_time = time.time()
 log(f"total elapsed time: {int((end_time - start_time)/3600)} hours {int((end_time-start_time)/60%60)} minutes {int(end_time-start_time)%60} seconds")
