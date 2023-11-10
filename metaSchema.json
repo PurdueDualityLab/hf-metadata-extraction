@@ -54,7 +54,7 @@
         }
       }
     },
-    "upstream_model": {
+    "base_model": {
       "type": "object",
       "properties":{
         "model_name": {"type": "string"},
@@ -75,8 +75,14 @@
       "type": "object",
       "properties":{
         "hardware_name": {"type": "string"},
+        "hours_used": {"type": "string"},
+        "cloud_provider": {"type": "string"},
+        "compute_region": {"type": "string"},
         "confidence_value": {"type": "number"}
       }
+    },
+    "carbon_emitted": {
+      "type": "string"
     },
     "hyper_parameters": {
       "items":{
@@ -115,6 +121,7 @@
     },
     "limitation_and_bias": {"type":"string"},
     "demo": {"type":"string"},
+    "grant": {"type":"string"},
     "input_format": {"type":"string"},
     "output_format": {"type":"string"}
   }
