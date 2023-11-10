@@ -1,12 +1,12 @@
 METADATA_PROMPT = {
-    "datasets": "What datasets, provide url if possible, was the model trained/pretrained on?" , # eval: 
-    "license": "What is the license?", # eval: 
-    "github": "What is the github repository of this model?", # eval: 
+    "datasets": "What datasets was the model trained/pretrained on?", # works
+    "license": "What is the license?", # works 
+    "github": "What is the github code repository of this model?", # eval: 
     "paper": "What research papers are associated to this model?", # eval: 
     "upstream_model": "What model was this model pretrained or downstreamed from?", # eval:
     "parameter_count": "What are the number of parameters (#params) this model is trained on, sometimes represented with \"M\", \"B\", and \"T\" as million, billion, and trillion?", # eval: 
     "hyper_parameters": "What are the values of some hyper parameters (parameters that control the learning process of the model) of this model.", # eval: 
-    "evaluation": "What is the evalutaion of the model. What evaluation metrics where used, and what are the results (include whole table if possible)?", # eval: 
+    "evaluation": "What is the evalutaion of the model. What evaluation metrics where used, and what are the results?", # eval: 
     "hardware": "What type of hardwarehardware, GPU and TPU pods, were used to train this model?", # eval: 
     "limitation_and_bias": "What are the limitations and biases of the model?", # eval: 
     "demo": "Find a form of demo for the model could be a link, code snippet or short paragraph.", # eval: 
@@ -15,55 +15,23 @@ METADATA_PROMPT = {
 }
 
 PREFIX_PROMPT = \
-    "Given information on Huggingface {domain} model : {model}, answer the question with confidence values.\n\
-    Answering rules:\n \
+    "Given documents of Huggingface {domain} model : {model}, answer the following question\n\
+    Extraction rules:\n \
     - rule 1: Adhere strictly to the schema structure in 'information_extraction' function\n \
     - rule 2: If a property is not present and is not required in the function parameters, do not include it in the output\n \
-    - rule 3: If you are confident a property is not present, answer 'none' instead\n \
-    - rule 4: Accompany each answer with a confidence value appended at the end of the answer\n\
-    Confidence value guidelines:\n \
-    - 0.0: You think there is less than 1 percent this could be the answer\n \
+    - rule 3: Accompany each extraction with a confidence value of how confident you are that the metadata was present\n \
+    - rule 4: If you are confident a property is not present in the documents, answer 'none' with high confidence score\n\
+    Confidence score guidelines:\n \
+    - 0.0: You think there is less than 1 percent what you found in the documents is the answer\n \
     - 0.1 to 0.3: You guess this as the answer but you are extremely unsure\n \
-    - 0.3 to 0.6: You have reasons to believe this as the answer but still are uncertain\n \
-    - 0.6 to 0.9: You are confident in the answer\n \
+    - 0.3 to 0.5: You have reasons to believe this as the answer but still are uncertain\n \
+    - 0.5 to 0.7: You are semi-confident in the answer\
+    - 0.7 to 0.9: You are pretty confident in the answer\n \
     - 1.0: You are over 99 percent sure of the answer\n\
-    Question: \n \
-    {question} \n\
-    If you are confident the answer is not present output:\n \
-    \"none\" with confidence value 1 \
+    Question:\n \
+    {question}\
     "
 
-FEW_SHOT_EXAMPLES = {
-    "datasets": "[mC4](https://www.tensorflow.org/datasets/catalog/c4#c4multilingual)" ,  
-    "license": "apache-2.0",  
-    "github": "https://github.com/facebookresearch/fairseq/tree/main/examples/xlmr",  
-    "paper": "[ByT5: Towards a token-free future with pre-trained byte-to-byte models](https://arxiv.org/abs/2105.13626)", 
-    "upstream_model": "bert-large-cased model", 
-    "parameter_count": "6M",  
-    "hyper_parameters": "",  
-    "evaluation": "",  
-    "hardware": "NVIDIA V100 GPU", 
-    "limitation_and_bias": "",  
-    "demo": "", 
-    "input_format": "",  
-    "output_format": "" 
-}
-
-BAD_FEW_SHOT_EXAMPLES = {
-    "datasets": "" ,  
-    "license": "apache-2.0",  
-    "github": "https://github.com/facebookresearch/fairseq/tree/main/examples/xlmr",  
-    "paper": "[ByT5: Towards a token-free future with pre-trained byte-to-byte models](https://arxiv.org/abs/2105.13626)", 
-    "upstream_model": "bert-large-cased model", 
-    "parameter_count": "6M",  
-    "hyper_parameters": "",  
-    "evaluation": "",  
-    "hardware": "NVIDIA V100 GPU", 
-    "limitation_and_bias": "",  
-    "demo": "", 
-    "input_format": "",  
-    "output_format": "" 
-}
 
 SIMPLE_METADATA_EXTRACTION_PROMPT = \
     "Given information on metadata of huggingface {domain} model : {model}, extract the properties of ONE single entity mentioned in the 'information_extraction' function.\n \

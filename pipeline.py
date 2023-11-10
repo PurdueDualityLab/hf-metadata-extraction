@@ -105,15 +105,14 @@ for model in models_iterable:
 
     vector_store = FAISS.from_documents(md_header_splits, OpenAIEmbeddings(allowed_special={'<|endoftext|>', '<|prompter|>', '<|assistant|>'}))
     llm = OpenAI(temperature = 0)
-    chatbot = ChatOpenAI(temperature = 0.1, model = "gpt-3.5-turbo")
+    chatbot = ChatOpenAI(temperature = 0.1, model = "gpt-4-1106-preview")
 
 
     for metadata in schema["extract_metadata"].keys():
         docs = ""
-        retriever = vector_store.as_retriever(search_type = "similarity_score_threshold", search_kwargs = {"k": 3, "score_threshold":0.6})
+        retriever = vector_store.as_retriever(search_type = "similarity_score_threshold", search_kwargs = {"k": 3, "score_threshold":0.7})
         metadata_prompt = prompt.METADATA_PROMPT[metadata]
         data_schema = {"properties" : {metadata : {**schema["extract_metadata"][metadata]}}}
-        example = prompt.FEW_SHOT_EXAMPLES[metadata]
 
         doc = retriever.get_relevant_documents(metadata_prompt)
         docs += pretty_print_docs(doc, metadata)
@@ -130,8 +129,9 @@ for model in models_iterable:
         extraction_result = chain.run({
             "domain": model_result["domain"],
             "model": model,
-            "documents": docs,
-            "question": metadata_prompt
+            "metadata": metadata,
+            "question": metadata_prompt,
+            "documents": docs
             })
 
         if type(extraction_result) == list:

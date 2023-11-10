@@ -1,6 +1,3 @@
 [
-    "google/byt5-large",
-    "dccuchile/bert-base-spanish-wwm-uncased",
-    "huggingface/CodeBERTa-small-v1",
-    "timm/mobilenetv3_large_100.miil_in21k_ft_in1k"
+    "google/byt5-large"
 ]
