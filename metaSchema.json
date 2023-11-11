@@ -83,8 +83,7 @@
             "properties": {
               "test/metric": {"type": "string"},
               "dataset": {"type": "string"},
-              "result": {"type": "string"},
-              "confidence_value": {"type": "number"}
+              "result": {"type": "string"}
             },
             "required": ["test", "result"]
           }

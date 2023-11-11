@@ -25,4 +25,6 @@ METADATA_PROMPT = \
 - output_format: extract the output format of this model\n \
 "
 
-LANG_PROMPT = " - language: return supported languages for this model\n "
+DOMAIN_PROMPT = "- domain: multimodal, computer-vision, natural-language-processing, audio, tabular, reinforcement-learning (could be more than one)\n "
+TASK_PROMPT = "- task: what tasks does the model perform\n "
+LANG_PROMPT = "- language: return supported languages for this model\n "
