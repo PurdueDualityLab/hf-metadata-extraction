@@ -57,8 +57,7 @@
         "hardware_name": {"type": "string"},
         "hours_used": {"type": "string"},
         "cloud_provider": {"type": "string"},
-        "compute_region": {"type": "string"},
-        "confidence_value": {"type": "number"}
+        "compute_region": {"type": "string"}
       }
     },
     "carbon_emitted": {
@@ -91,8 +90,7 @@
         {
           "type": "object",
           "properties":{
-            "link": {"type": "string"},
-            "confidence_value": {"type": "number"}
+            "link": {"type": "string"}
           }
         }
       ] 

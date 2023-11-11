@@ -8,10 +8,12 @@ import argparse
 import os
 
 from utils import hf_utils
-import keys
 import prompt
 
-os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
+# os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
+
+openai_api_key = os.environ.get('OPENAI_API_KEY')
+
 
 with open("metaSchema.json", 'r') as json_file:
     schema = json.load(json_file)
@@ -132,7 +134,7 @@ for index, model in enumerate(models_iterable):
         final_result[model] = str(e)
         log(model + ": " + str(e) + "\n")
         
-    with open("result.json", "w") as json_file:
+    with open(f"result_{args.start}_{args.range}.json", "w") as json_file:
         json.dump(final_result, json_file, indent = 4)
 
 end_time = time.time()
