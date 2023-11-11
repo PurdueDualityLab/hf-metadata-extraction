@@ -26,5 +26,5 @@ METADATA_PROMPT = \
 "
 
 DOMAIN_PROMPT = "- domain: multimodal, computer-vision, natural-language-processing, audio, tabular, reinforcement-learning (could be more than one)\n "
-TASK_PROMPT = "- task: what tasks does the model perform\n "
+TASK_PROMPT = "- tasks: feature-extraction, text-to-image, image-to-text, text-to-video, visual-question-answering, document-question-answering, graph-machine-learning, depth-estimation, image-classification, object-detection, image-segmentation, image-to-image, unconditional-image-generation, video-classification, zero-shot-image-classification, text-classification, token-classification, table-question-answering, question-answering, zero-shot-classification, translation, summarization, conversational, text-generation, text2text-generation, fill-mask, sentence-similarity, text-to-speech, automatic-speech-recognition, audio-to-audio, audio-classification, voice-activity-detection, tabular-classification, tabular-regression, reinforcement-learning, robotics\n "
 LANG_PROMPT = "- language: return supported languages for this model\n "
