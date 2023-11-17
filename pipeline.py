@@ -9,10 +9,11 @@ import os
 
 from utils import hf_utils
 import prompt
+import keys
 
-# os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
+os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 
-openai_api_key = os.environ.get('OPENAI_API_KEY')
+#openai_api_key = os.environ.get('OPENAI_API_KEY')
 
 
 with open("metaSchema.json", 'r') as json_file:
@@ -23,7 +24,7 @@ with open("log.txt", 'w') as the_log:
     the_log.close()
 
 parser = argparse.ArgumentParser(description="Python Script with Different Modes")
-parser.add_argument("--data", choices = ["input", "filtered"], required= True, help = "Select to run through input data set or filtered model set")
+parser.add_argument("--data", choices = ["input", "groundtruth", "filtered"], required= True, help = "Select to run through input data set, groundtruth set, or filtered model set")
 parser.add_argument("--start", type = int, help= "Select which model index to start from in filtered_models.json file")
 parser.add_argument("--range", type = int, help= "Select number of models to run through")
 args = parser.parse_args()
@@ -33,8 +34,12 @@ if args.data == "input":
     with open("input.json", 'r') as json_file:
         data = json.load(json_file)
     models_iterable = data
+elif args.data == "groundtruth":
+    with open("groundTruth.json", 'r') as json_file:
+        data = json.load(json_file)
+    models_iterable = data.keys()
 elif args.data == "filtered":
-    
+     
     # make sure they input start and range
     if args.start is None or args.range is None:
         parser.error("for filtered data, starting index and range required.")
