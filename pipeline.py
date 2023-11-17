@@ -1,8 +1,6 @@
 import huggingface_hub
 import openai
-from collections import Counter
 from langchain.text_splitter import MarkdownHeaderTextSplitter
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.llms import OpenAI
@@ -19,26 +17,9 @@ import asyncio
 import sys
 import os
 
-import keys
 import prompt
 
-os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
-
-parser = argparse.ArgumentParser(description="Python Script with Different Modes")
-parser.add_argument("--data", choices = ["input", "filtered"], required= True, help = "Select to run through input data set or filtered model set")
-parser.add_argument("--start", type = int, help= "Select which model index to start from in filtered_models.json file")
-parser.add_argument("--range", type = int, help= "Select number of models to run through")
-args = parser.parse_args()
-
-if args.data == "input":
-    with open("input.json", 'r') as json_file:
-        data = json.load(json_file)
-
-if args.data == "filtered":
-    if args.start is None or args.range is None:
-        parser.error("for filtered data, starting index and range required.")
-    with open("filtered_models.json", 'r') as json_file:
-        data = json.load(json_file)
+openai_api_key = os.environ.get('OPENAI_API_KEY')
 
 with open("metaSchema.json", 'r') as json_file:
     schema = json.load(json_file)
@@ -46,6 +27,28 @@ with open("metaSchema.json", 'r') as json_file:
 with open("log.txt", 'w') as the_log:
     the_log.write("")
     the_log.close()
+
+parser = argparse.ArgumentParser(description="Python Script with Different Modes")
+parser.add_argument("--data", choices = ["input", "filtered"], required= True, help = "Select to run through input data set or filtered model set")
+parser.add_argument("--start", type = int, help= "Select which model index to start from in filtered_models.json file")
+parser.add_argument("--range", type = int, help= "Select number of models to run through")
+args = parser.parse_args()
+
+#loads in models
+if args.data == "input":
+    with open("input.json", 'r') as json_file:
+        data = json.load(json_file)
+elif args.data == "groundtruth":
+    with open("groundTruth.json", 'r') as json_file:
+        data = json.load(json_file)
+    models_iterable = data.keys()
+elif args.data == "filtered":
+    
+    # make sure they input start and range
+    if args.start is None or args.range is None:
+        parser.error("for filtered data, starting index and range required.")
+    with open("filtered_models.json", 'r') as json_file:
+        data = json.load(json_file)
 
 def load_card(model_name: str) -> str:
 
@@ -200,15 +203,8 @@ for model in models_iterable:
         log(f"\nERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n {str(e)} \n")
         result[model] = str(e)
         
-
-    #For eval purposes
     with open("result.json", "w") as json_file:
         json.dump(result, json_file, indent = 4)
-
-
-# file_path = "result.json"
-# with open(file_path, "w") as json_file:
-#     json.dump(result, json_file, indent = 4)
 
 end_time = time.time()
 log(f"total elapsed time: {int((end_time - start_time)/3600)} hours {int((end_time-start_time)/60%60)} minutes {int(end_time-start_time)%60} seconds")
