@@ -9,11 +9,10 @@ import os
 
 from utils import hf_utils
 import prompt
-import keys
 
-os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
+#os.environ["OPENAI_API_KEY"] = keys.OPENAI_API_KEY
 
-#openai_api_key = os.environ.get('OPENAI_API_KEY')
+openai_api_key = os.environ.get('OPENAI_API_KEY')
 
 
 with open("metaSchema.json", 'r') as json_file:
