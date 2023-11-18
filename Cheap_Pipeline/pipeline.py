@@ -176,7 +176,7 @@ for model in models_iterable:
 
         prompt_template = ChatPromptTemplate.from_messages(
             [
-                SystemMessage(content = (prompt.EXTRACTION_PROMPT)),
+                SystemMessage(content = (prompt.PREFIX_PROMPT + prompt.EXTRACTION_PROMPT)),
                 HumanMessagePromptTemplate.from_template("{documents}"),
             ]
         )

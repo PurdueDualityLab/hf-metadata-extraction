@@ -22,14 +22,16 @@ METADATA_PROMPT = {
     "SB3": "Is SB3 used in this reinforcement learning model", #eval:
 }
 
-EXTRACTION_PROMPT = \
+PREFIX_PROMPT = \
     "Given metadata information of huggingface {model_type} model : {model}, extract the properties of ONE single entity mentioned in the 'information_extraction' function.\n \
     Extraction rules: \n \
     - rule 1: Adhere strictly to the schema structure in 'information_extraction'\n \
     - rule 2: If a property is not present but is required in the function parameters, output "" instead\n \
     - rule 3: If a property is not present and is not required in the function parameters, do not include it in the output\n \
     - rule 4: Only extract one item for 'info' in 'information_extraction' function \n \
-    Extraction rules for specific metadata: \n \
+"    
+EXTRACTION_PROMPT =\
+    "Extraction rules for specific metadata: \n \
     - datasets: only return dataset used to train or finetune model, not the upstream model of the model\n \
     - github: extract github link of this model (only return the github link)\n \
     - paper: if a research paper was written, extract arxiv research paper link (only return the url of the paper)\n \
